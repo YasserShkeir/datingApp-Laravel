@@ -43,3 +43,7 @@ dating_pages.load_landing = async () => {
   const response_landing = await dating_pages.getAPI(landing_url);
   dating_pages.Console("Testing Landing API", response_landing.data.data);
 };
+
+// Login Page Form Control
+const forms = document.querySelectorAll("form");
+console.log(forms);
