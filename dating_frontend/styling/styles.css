@@ -41,12 +41,14 @@ nav img {
 /* FOOTER */
 
 footer {
-  height: 100px;
+  min-height: 100px;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   background-color: #544f4d;
+  position: absolute;
+  bottom: 0;
 }
 
 footer h3 {
@@ -111,7 +113,7 @@ footer h3 {
   height: 100%;
   width: 100%;
   max-height: 400px;
-  max-width: 750px;
+  max-width: 700px;
 }
 
 #login-content-txt {
@@ -132,5 +134,29 @@ footer h3 {
 @media only screen and (max-width: 1000px) {
   #login-content {
     flex-direction: column;
+    padding: 10% 10%;
+  }
+
+  #login-content img {
+    min-height: 200px;
+    min-width: 300px;
+    height: 100%;
+    width: 100%;
+    max-height: 250px;
+    max-width: 400px;
+  }
+
+  #login-content-txt {
+    width: fit-content;
+  }
+
+  .btn {
+    padding: 5px 10px;
+    font-size: 16px;
+  }
+
+  footer {
+    position: relative;
+    bottom: 0;
   }
 }
