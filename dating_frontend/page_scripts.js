@@ -68,6 +68,18 @@ formCloser.forEach((closer) => {
   });
 });
 
-// forms.forEach((form, index) => {
-//   console.log(form);
-// });
+// -- Login Page Input Controller
+// -- -- Sign In
+const signInEmail = document.querySelector("#signInEmail");
+const signInPass = document.querySelector("#signInPass");
+const signInSubmit = document.querySelector("#signInSubmit");
+
+signInSubmit.addEventListener("click", () => {
+  // Authenticate and Authorize
+});
+
+// -- -- Sign Up
+const signUpName = document.querySelector("#signUpName");
+const signUpEmail = document.querySelector("#signUpEmail");
+const signUpPass = document.querySelector("#signUpPass");
+const signUpSubmit = document.querySelector("#signUpSubmit");

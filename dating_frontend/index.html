@@ -42,13 +42,26 @@
         <div class="form-title"><p>Sign In</p></div>
         <div class="flex-col form-row">
           <label>Email</label>
-          <input type="email" placeholder="Email" required />
+          <input id="signInEmail" type="email" placeholder="Email" required />
         </div>
         <div class="flex-col form-row">
           <label>Password</label>
-          <input type="password" placeholder="Password" required />
+          <input
+            id="signInPass"
+            type="password"
+            placeholder="Password"
+            required
+          />
         </div>
-        <input class="btn btn-filled formBtn" type="submit" value="Sign In" />
+        <!-- <input
+          id="signInSubmit"
+          class="btn btn-filled formBtn"
+          type="submit"
+          value="Sign In"
+        /> -->
+        <button id="signInSubmit" class="btn btn-filled formBtn">
+          Sign In
+        </button>
       </div>
     </form>
 
@@ -59,14 +72,28 @@
         <img src="./assets/Dating Design Transparent.png" />
         <div class="form-title"><p>Sign Up</p></div>
         <div class="flex-col form-row">
+          <label>Full Name</label>
+          <input id="signUpName" type="text" placeholder="Full Name" required />
+        </div>
+        <div class="flex-col form-row">
           <label>Email</label>
-          <input type="email" placeholder="Email" required />
+          <input id="signUpEmail" type="email" placeholder="Email" required />
         </div>
         <div class="flex-col form-row">
           <label>Password</label>
-          <input type="password" placeholder="Password" required />
+          <input
+            id="signUpPass"
+            type="password"
+            placeholder="Password"
+            required
+          />
         </div>
-        <input class="btn btn-filled formBtn" type="submit" value="Sign Up" />
+        <input
+          id="signUpSubmit"
+          class="btn btn-filled formBtn"
+          type="submit"
+          value="Sign Up"
+        />
       </div>
     </form>
 

@@ -53,6 +53,7 @@ footer {
   background-color: #544f4d;
   position: absolute;
   bottom: 0;
+  justify-self: flex-end;
 }
 
 footer h3 {
@@ -132,10 +133,17 @@ footer h3 {
   width: fit-content;
   cursor: pointer;
   font-weight: 700;
-  background-color: #ef5241;
-  color: #fff;
+  background-color: #fff;
+  color: #ef5241;
+  border: 1px solid black;
   padding: 5px 10px;
   border-radius: 25px;
+}
+
+.close-form p:hover {
+  background-color: #ef5241;
+  color: #fff;
+  border: 1px solid black;
 }
 
 .form-content img {
@@ -233,10 +241,5 @@ footer h3 {
   .btn {
     padding: 5px 10px;
     font-size: 16px;
-  }
-
-  footer {
-    position: relative;
-    bottom: 0;
   }
 }
