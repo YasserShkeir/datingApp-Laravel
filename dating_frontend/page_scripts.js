@@ -1,6 +1,6 @@
 const dating_pages = {};
 
-dating_pages.baseURL = "";
+dating_pages.baseURL = "http://127.0.0.1:8000/";
 
 dating_pages.Console = (title, values, oneValue = true) => {
   console.log("---" + title + "---");
