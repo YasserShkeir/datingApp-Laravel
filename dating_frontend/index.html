@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>YouMe Dating | Find your other half</title>
+    <link rel="icon" href="./assets/Dating Design.png" />
+    <link rel="stylesheet" href="./styling/styles.css" />
+  </head>
+
+  <body>
+    <!-- Navigation Bar not Logged In -->
+    <nav class="flex">
+      <img src="./assets/Dating Design Transparent.png" />
+      <div class="flex" id="nav-right">
+        <button class="navLink btn btn-hollow" id="signIn">Sign In</button>
+        <button class="navLink btn btn-filled" id="signUp">Sign Up</button>
+      </div>
+    </nav>
+
+    <!-- Login Page Content -->
+    <section id="login-content"></section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="./page_scripts.js"></script>
+    <script>
+      dating_pages.loadFor("landing");
+    </script>
+  </body>
+</html>
