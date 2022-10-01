@@ -44,6 +44,30 @@ dating_pages.load_landing = async () => {
   dating_pages.Console("Testing Landing API", response_landing.data.data);
 };
 
-// Login Page Form Control
-const forms = document.querySelectorAll("form");
-console.log(forms);
+// Login Page Form Section:
+// -- Login Page Form Controller
+const formCloser = document.querySelectorAll(".close-form p");
+
+const signInBtn = document.querySelector("#signIn");
+const signInForm = document.querySelector("#signInForm");
+const signUpBtn = document.querySelector("#signUp");
+const signUpForm = document.querySelector("#signUpForm");
+
+signInBtn.addEventListener("click", () => {
+  signInForm.style.display = "flex";
+});
+
+signUpBtn.addEventListener("click", () => {
+  signUpForm.style.display = "flex";
+});
+
+formCloser.forEach((closer) => {
+  closer.addEventListener("click", () => {
+    signInForm.style.display = "none";
+    signUpForm.style.display = "none";
+  });
+});
+
+// forms.forEach((form, index) => {
+//   console.log(form);
+// });
