@@ -5,6 +5,8 @@
 
 body {
   margin: 0px;
+  display: flex;
+  flex-direction: column;
 }
 
 body,
@@ -16,7 +18,7 @@ button {
 /* NAV BAR */
 
 nav {
-  background-color: rgb(215, 215, 50);
+  background-color: #d7d732;
   height: 100px;
   padding: 0px 3%;
   align-items: center;
@@ -37,6 +39,23 @@ nav img {
 }
 
 /* FOOTER */
+
+footer {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background-color: #544f4d;
+}
+
+footer h3 {
+  background-color: #fff;
+  width: fit-content;
+  height: fit-content;
+  padding: 10px 20px;
+  border-radius: 25px;
+}
 
 /* UTILITIES */
 
@@ -78,9 +97,7 @@ nav img {
 
 /* Login Page Content */
 #login-content {
-  height: calc(
-    100vh - (100px + 100px)
-  ); /* Height of page minus heigh of nav + footer */
+  height: auto; /* Height of page minus heigh of nav + footer */
   padding: 5% 10%;
   gap: 4%;
   box-sizing: border-box;
@@ -110,4 +127,10 @@ nav img {
   font-weight: 600;
   font-size: 32px;
   color: #ef5241;
+}
+
+@media only screen and (max-width: 1000px) {
+  #login-content {
+    flex-direction: column;
+  }
 }
