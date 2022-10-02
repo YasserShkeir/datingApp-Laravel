@@ -270,6 +270,8 @@ footer h3 {
 .section-label {
   font-size: 24px;
   margin-bottom: 10px;
+  font-weight: 500;
+  color: #fff;
 }
 
 .user-cards {
@@ -313,6 +315,29 @@ footer h3 {
 .user-card-age,
 .user-card-location {
   font-size: 12px;
+}
+
+.user-card-controls {
+  width: 90%;
+  justify-content: space-between;
+  font-size: 24px;
+}
+
+.user-card-controls div {
+  margin: 0px;
+  line-height: normal;
+}
+
+.user-card-controls div:hover {
+  cursor: pointer;
+}
+
+.user-card-controls div:hover:first-child {
+  color: #ef5241;
+}
+
+.user-card-controls div:hover:last-child {
+  color: #d7d732;
 }
 
 @media only screen and (max-width: 600px) {

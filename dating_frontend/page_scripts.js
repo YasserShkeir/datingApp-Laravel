@@ -37,6 +37,7 @@ dating_pages.postAPI = async (api_url, api_data, api_token = null) => {
 dating_pages.loadFor = (page) => {
   eval("dating_pages.load_" + page + "();");
 };
+
 dating_pages.load_login = async () => {
   const formCloser = document.querySelectorAll(".close-form p");
   const signInBtn = document.getElementById("signIn");
@@ -57,6 +58,7 @@ dating_pages.load_login = async () => {
       signUpForm.style.display = "none";
     });
   });
+
   // -- Login Page Input Controller
   // -- -- Sign In
   signInSubmit.addEventListener("click", async (event) => {
@@ -72,18 +74,20 @@ dating_pages.load_login = async () => {
     const login_url = `${dating_pages.baseURL}/login`;
     event.preventDefault();
     const response_login = await dating_pages.postAPI(login_url, postData);
-    console.log("response_login");
-
     dating_pages.Console("Testing login API", response_login);
+    console.log(response_login.data.authorisation.token);
+    localStorage.setItem("jwt", response_login.data.data.authorisation.token);
+
     debugger;
   });
+
   // -- -- Sign Up
   signUpSubmit.addEventListener("click", async (event) => {
     const signUpName = document.getElementById("signUpName");
     const signUpEmail = document.getElementById("signUpEmail");
     const dateOfBirth = document.getElementById("dob");
     const signUpPass = document.getElementById("signUpPass");
-    const location = "x";
+    const location = navigator.geolocation.getCurrentPosition;
     const selectedGender = document.getElementById("selectedGender"); // 0 male; 1 female
     const interests = "Edit Interests";
     const postData = {
@@ -100,4 +104,35 @@ dating_pages.load_login = async () => {
     const response_signup = await dating_pages.postAPI(signup_url, postData);
     dating_pages.Console("Testing login API", response_signup);
   });
+};
+
+dating_pages.load_landing = async () => {
+  const userCardCaller = (id, imageSrc, userName, age, location) => {
+    const card = `<div class="flex-col user-card">
+                    <img src="${imageSrc}" />
+                    <div class="user-card-name">${userName}</div>
+                    <div class="user-card-age">Age: ${age}</div>
+                    <div class="user-card-location">${location}</div>
+                    <div class="flex user-card-controls">
+                      <div class="user-card-controls-heart" title="Like">&#10084;</div>
+                      <div class="user-card-controls-star" title="Add to Favorites">
+                        &#9733;
+                      </div>
+                    </div>
+                  </div>`;
+
+    return card;
+  };
+
+  const closeUsers = document.querySelector(
+    "#landing-content-closest .user-cards"
+  );
+
+  closeUsers.innerHTML += userCardCaller(
+    1,
+    "./assets/default.jpg",
+    "Yasser Shkeir",
+    21,
+    "Beirut"
+  );
 };
