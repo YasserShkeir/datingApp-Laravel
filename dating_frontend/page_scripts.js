@@ -1,6 +1,6 @@
 const dating_pages = {};
 
-dating_pages.baseURL = "http://127.0.0.1:8000";
+dating_pages.baseURL = "http://127.0.0.1:8000/api";
 
 dating_pages.Console = (title, values, oneValue = true) => {
   console.log("---" + title + "---");
@@ -70,16 +70,22 @@ formCloser.forEach((closer) => {
 
 // -- Login Page Input Controller
 // -- -- Sign In
-const signInEmail = document.querySelector("#signInEmail");
-const signInPass = document.querySelector("#signInPass");
-const signInSubmit = document.querySelector("#signInSubmit");
+let signInEmail = document.querySelector("#signInEmail");
+let signInPass = document.querySelector("#signInPass");
+let signInSubmit = document.querySelector("#signInSubmit");
 
 signInSubmit.addEventListener("click", () => {
   // Authenticate and Authorize
 });
 
 // -- -- Sign Up
-const signUpName = document.querySelector("#signUpName");
-const signUpEmail = document.querySelector("#signUpEmail");
-const signUpPass = document.querySelector("#signUpPass");
-const signUpSubmit = document.querySelector("#signUpSubmit");
+let signUpName = document.querySelector("#signUpName");
+let signUpEmail = document.querySelector("#signUpEmail");
+let dateOfBirth = document.querySelector("#dob");
+let selectedGender = document.querySelector("#selectedGender"); // 0 male; 1 female
+let signUpPass = document.querySelector("#signUpPass");
+let signUpSubmit = document.querySelector("#signUpSubmit");
+
+signUpSubmit.addEventListener("click", () => {
+  // Verify Credentials then add
+});
