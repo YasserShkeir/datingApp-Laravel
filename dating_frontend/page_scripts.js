@@ -65,10 +65,8 @@ dating_pages.load_login = async () => {
     const signInEmail = document.getElementById("signInEmail");
     const signInPass = document.getElementById("signInPass");
     const postData = {
-      // email: signInEmail.value,
-      // password: signInPass.value,
-      email: "test1@test.com",
-      password: "yasser123",
+      email: signInEmail.value,
+      password: signInPass.value,
     };
     // -- API Section
     const login_url = `${dating_pages.baseURL}/login`;

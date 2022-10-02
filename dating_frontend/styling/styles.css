@@ -69,25 +69,21 @@ footer h3 {
 }
 
 /* UTILITIES */
-
 ::-webkit-scrollbar {
   width: 20px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
+  background: #544f4d;
+}
+
+::-webkit-scrollbar-thumb {
+  margin: 4px;
   background: #d7d732;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  margin: 4px;
-  background: #ef5241;
-}
-
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #544f4d;
+  background: #fff;
 }
 
 .flex {
@@ -254,7 +250,7 @@ footer h3 {
 
 /* Landing Page Content */
 .landing-section {
-  height: 250px;
+  min-height: 250px;
   width: 90%;
   background-color: #ef5241;
   justify-self: center;
@@ -263,13 +259,60 @@ footer h3 {
   padding: 15px 35px;
   box-sizing: border-box;
   border-radius: 25px;
-  overflow-x: scroll;
 }
 
 #landing-content-favorites {
 }
 
 #landing-content-closest {
+}
+
+.section-label {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.user-cards {
+  background-image: linear-gradient(#ef5241, #544f4d);
+  height: 100%;
+  width: 100%;
+  overflow-x: scroll;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  gap: 10px;
+}
+
+.user-card {
+  background-color: #fff;
+  min-width: 125px;
+  width: fit-content;
+  max-width: 150px;
+  height: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.user-card img {
+  max-width: 110px;
+  margin-bottom: 5px;
+}
+
+.user-card-name,
+.user-card-age,
+.user-card-location {
+  width: 95%;
+  text-align: left !important;
+}
+
+.user-card-name {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.user-card-age,
+.user-card-location {
+  font-size: 12px;
 }
 
 @media only screen and (max-width: 600px) {
