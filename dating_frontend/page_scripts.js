@@ -39,7 +39,7 @@ dating_pages.loadFor = (page) => {
 };
 
 dating_pages.load_login = async () => {
-  const login_url = `${dating_pages.baseURL}/login`;
+  const login_url = `${dating_pages.baseURL}/test`;
   const response_login = await dating_pages.getAPI(login_url);
   dating_pages.Console("Testing login API", response_login.data);
 
