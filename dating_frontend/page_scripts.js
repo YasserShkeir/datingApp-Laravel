@@ -39,9 +39,21 @@ dating_pages.loadFor = (page) => {
 };
 
 dating_pages.load_login = async () => {
-  const login_url = `${dating_pages.baseURL}/test`;
-  const response_login = await dating_pages.getAPI(login_url);
-  dating_pages.Console("Testing login API", response_login.data);
+  // const logintest_url = `${dating_pages.baseURL}/logintest`;
+  // const response_logintest = await dating_pages.getAPI(logintest_url);
+  // dating_pages.Console("Testing loginTest API", response_logintest.data);
+
+  // const login_url = `${dating_pages.baseURL}/login`;
+  // const response_login = await dating_pages.postAPI(login_url);
+  // dating_pages.Console("Testing login API", response_login.data);
+
+  // const logout_url = `${dating_pages.baseURL}/logout`;
+  // const response_logout = await dating_pages.getAPI(logout_url);
+  // dating_pages.Console("Testing logout API", response_logout.data);
+
+  // const register_url = `${dating_pages.baseURL}/register`;
+  // const response_register = await dating_pages.postAPI(register_url);
+  // dating_pages.Console("Testing login API", response_register.data);
 
   // Login Page Form Section:
   // -- Login Page Form Controller
@@ -69,12 +81,30 @@ dating_pages.load_login = async () => {
 
   // -- Login Page Input Controller
   // -- -- Sign In
-  let signInEmail = document.querySelector("#signInEmail");
-  let signInPass = document.querySelector("#signInPass");
   let signInSubmit = document.querySelector("#signInSubmit");
 
   signInSubmit.addEventListener("click", () => {
     // Authenticate and Authorize
+    // -- Data Section
+    let signInEmail = document.querySelector("#signInEmail");
+    let signInPass = document.querySelector("#signInPass");
+
+    let postData = {
+      // email: signInEmail.value,
+      // password: signInPass.value,
+      email: "test1@test.com",
+      password: "yasser123",
+    };
+
+    console.log(postData);
+    debugger;
+    // -- API Section
+    const login_url = `${dating_pages.baseURL}/login`;
+    const response_login = dating_pages.postAPI(login_url, postData);
+    console.log(response_login.data);
+    debugger;
+    dating_pages.Console("Testing login API", response_login.data);
+    debugger;
   });
 
   // -- -- Sign Up
