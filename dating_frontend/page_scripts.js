@@ -99,23 +99,73 @@ dating_pages.load_login = async () => {
     console.log(postData);
     debugger;
     // -- API Section
-    const login_url = `${dating_pages.baseURL}/login`;
-    const response_login = dating_pages.postAPI(login_url, postData);
-    console.log(response_login.data);
-    debugger;
-    dating_pages.Console("Testing login API", response_login.data);
+    // const login_url = `${dating_pages.baseURL}/login`;
+    // const response_login = dating_pages.postAPI(login_url, postData);
+    // console.log(response_login.data);
+    // debugger;
+    // dating_pages.Console("Testing login API", response_login.data);
+    // debugger;
+
+    // -- API Manual Test
+    const login_url = "http://127.0.0.1:8000/api/login";
+    axios
+      .post(login_url, {
+        email: "test1@test.com",
+        password:
+          "$2y$10$cNpkrs.apGku6Nb5RKyYXOB5HIm0WsNOPO4KDxtPM4D9m1jPna/eS",
+      })
+      .then(function (response) {
+        console.log(response);
+        debugger;
+      })
+      .catch(function (error) {
+        console.log(error);
+        debugger;
+      });
+    // const response_login = dating_pages.postAPI(login_url, postData);
+    // console.log(response_login.data);
+    // debugger;
+    // dating_pages.Console("Testing login API", response_login.data);
     debugger;
   });
 
   // -- -- Sign Up
-  let signUpName = document.querySelector("#signUpName");
-  let signUpEmail = document.querySelector("#signUpEmail");
-  let dateOfBirth = document.querySelector("#dob");
-  let selectedGender = document.querySelector("#selectedGender"); // 0 male; 1 female
-  let signUpPass = document.querySelector("#signUpPass");
+
   let signUpSubmit = document.querySelector("#signUpSubmit");
 
   signUpSubmit.addEventListener("click", () => {
+    let signUpName = document.querySelector("#signUpName");
+    let signUpEmail = document.querySelector("#signUpEmail");
+    let dateOfBirth = document.querySelector("#dob");
+    let signUpPass = document.querySelector("#signUpPass");
+    let location = "x";
+    let selectedGender = document.querySelector("#selectedGender"); // 0 male; 1 female
+    let interests = "Edit Interests";
+
+    let postData = {
+      name: signUpName.value,
+      email: signUpEmail.value,
+      dob: dateOfBirth.value,
+      password: signUpPass.value,
+      location: location,
+      gender_preference: selectedGender.value,
+      interests: interests,
+    };
+
+    console.log(postData);
+    debugger;
     // Verify Credentials then add
+    const login_url = "http://127.0.0.1:8000/api/register";
+    axios
+      .post(login_url, postData)
+      .then(function (response) {
+        console.log(response);
+        debugger;
+      })
+      .catch(function (error) {
+        console.log(error);
+        debugger;
+      });
+    debugger;
   });
 };
