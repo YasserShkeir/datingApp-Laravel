@@ -38,54 +38,54 @@ dating_pages.loadFor = (page) => {
   eval("dating_pages.load_" + page + "();");
 };
 
-dating_pages.load_landing = async () => {
-  const landing_url = `${dating_pages.baseURL}/landing`;
-  const response_landing = await dating_pages.getAPI(landing_url);
-  dating_pages.Console("Testing Landing API", response_landing.data.data);
-};
+dating_pages.load_login = async () => {
+  const login_url = `${dating_pages.baseURL}/login`;
+  const response_login = await dating_pages.getAPI(login_url);
+  dating_pages.Console("Testing login API", response_login.data);
 
-// Login Page Form Section:
-// -- Login Page Form Controller
-const formCloser = document.querySelectorAll(".close-form p");
+  // Login Page Form Section:
+  // -- Login Page Form Controller
+  const formCloser = document.querySelectorAll(".close-form p");
 
-const signInBtn = document.querySelector("#signIn");
-const signInForm = document.querySelector("#signInForm");
-const signUpBtn = document.querySelector("#signUp");
-const signUpForm = document.querySelector("#signUpForm");
+  const signInBtn = document.querySelector("#signIn");
+  const signInForm = document.querySelector("#signInForm");
+  const signUpBtn = document.querySelector("#signUp");
+  const signUpForm = document.querySelector("#signUpForm");
 
-signInBtn.addEventListener("click", () => {
-  signInForm.style.display = "flex";
-});
-
-signUpBtn.addEventListener("click", () => {
-  signUpForm.style.display = "flex";
-});
-
-formCloser.forEach((closer) => {
-  closer.addEventListener("click", () => {
-    signInForm.style.display = "none";
-    signUpForm.style.display = "none";
+  signInBtn.addEventListener("click", () => {
+    signInForm.style.display = "flex";
   });
-});
 
-// -- Login Page Input Controller
-// -- -- Sign In
-let signInEmail = document.querySelector("#signInEmail");
-let signInPass = document.querySelector("#signInPass");
-let signInSubmit = document.querySelector("#signInSubmit");
+  signUpBtn.addEventListener("click", () => {
+    signUpForm.style.display = "flex";
+  });
 
-signInSubmit.addEventListener("click", () => {
-  // Authenticate and Authorize
-});
+  formCloser.forEach((closer) => {
+    closer.addEventListener("click", () => {
+      signInForm.style.display = "none";
+      signUpForm.style.display = "none";
+    });
+  });
 
-// -- -- Sign Up
-let signUpName = document.querySelector("#signUpName");
-let signUpEmail = document.querySelector("#signUpEmail");
-let dateOfBirth = document.querySelector("#dob");
-let selectedGender = document.querySelector("#selectedGender"); // 0 male; 1 female
-let signUpPass = document.querySelector("#signUpPass");
-let signUpSubmit = document.querySelector("#signUpSubmit");
+  // -- Login Page Input Controller
+  // -- -- Sign In
+  let signInEmail = document.querySelector("#signInEmail");
+  let signInPass = document.querySelector("#signInPass");
+  let signInSubmit = document.querySelector("#signInSubmit");
 
-signUpSubmit.addEventListener("click", () => {
-  // Verify Credentials then add
-});
+  signInSubmit.addEventListener("click", () => {
+    // Authenticate and Authorize
+  });
+
+  // -- -- Sign Up
+  let signUpName = document.querySelector("#signUpName");
+  let signUpEmail = document.querySelector("#signUpEmail");
+  let dateOfBirth = document.querySelector("#dob");
+  let selectedGender = document.querySelector("#selectedGender"); // 0 male; 1 female
+  let signUpPass = document.querySelector("#signUpPass");
+  let signUpSubmit = document.querySelector("#signUpSubmit");
+
+  signUpSubmit.addEventListener("click", () => {
+    // Verify Credentials then add
+  });
+};
