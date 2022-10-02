@@ -24,7 +24,9 @@ return new class extends Migration
             $table->string('password');
             $table->string('location');
             $table->string('gender_preference');
+            $table->string('interests');
             $table->string('bio')->nullable($value = true);
+            $table->boolean('incognito')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
