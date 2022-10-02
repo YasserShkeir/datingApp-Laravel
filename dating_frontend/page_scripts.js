@@ -37,112 +37,58 @@ dating_pages.postAPI = async (api_url, api_data, api_token = null) => {
 dating_pages.loadFor = (page) => {
   eval("dating_pages.load_" + page + "();");
 };
-
 dating_pages.load_login = async () => {
-  // const logintest_url = `${dating_pages.baseURL}/logintest`;
-  // const response_logintest = await dating_pages.getAPI(logintest_url);
-  // dating_pages.Console("Testing loginTest API", response_logintest.data);
-
-  // const login_url = `${dating_pages.baseURL}/login`;
-  // const response_login = await dating_pages.postAPI(login_url);
-  // dating_pages.Console("Testing login API", response_login.data);
-
-  // const logout_url = `${dating_pages.baseURL}/logout`;
-  // const response_logout = await dating_pages.getAPI(logout_url);
-  // dating_pages.Console("Testing logout API", response_logout.data);
-
-  // const register_url = `${dating_pages.baseURL}/register`;
-  // const response_register = await dating_pages.postAPI(register_url);
-  // dating_pages.Console("Testing login API", response_register.data);
-
-  // Login Page Form Section:
-  // -- Login Page Form Controller
   const formCloser = document.querySelectorAll(".close-form p");
-
-  const signInBtn = document.querySelector("#signIn");
-  const signInForm = document.querySelector("#signInForm");
-  const signUpBtn = document.querySelector("#signUp");
-  const signUpForm = document.querySelector("#signUpForm");
-
+  const signInBtn = document.getElementById("signIn");
+  const signInForm = document.getElementById("signInForm");
+  const signUpBtn = document.getElementById("signUp");
+  const signUpForm = document.getElementById("signUpForm");
+  const signInSubmit = document.getElementById("signInSubmit");
+  const signUpSubmit = document.getElementById("signUpSubmit");
   signInBtn.addEventListener("click", () => {
     signInForm.style.display = "flex";
   });
-
   signUpBtn.addEventListener("click", () => {
     signUpForm.style.display = "flex";
   });
-
   formCloser.forEach((closer) => {
     closer.addEventListener("click", () => {
       signInForm.style.display = "none";
       signUpForm.style.display = "none";
     });
   });
-
   // -- Login Page Input Controller
   // -- -- Sign In
-  let signInSubmit = document.querySelector("#signInSubmit");
-
-  signInSubmit.addEventListener("click", () => {
+  signInSubmit.addEventListener("click", async (event) => {
     // Authenticate and Authorize
     // -- Data Section
-    let signInEmail = document.querySelector("#signInEmail");
-    let signInPass = document.querySelector("#signInPass");
-
-    let postData = {
+    const signInEmail = document.getElementById("signInEmail");
+    const signInPass = document.getElementById("signInPass");
+    const postData = {
       // email: signInEmail.value,
       // password: signInPass.value,
       email: "test1@test.com",
       password: "yasser123",
     };
-
-    console.log(postData);
-    debugger;
     // -- API Section
-    // const login_url = `${dating_pages.baseURL}/login`;
-    // const response_login = dating_pages.postAPI(login_url, postData);
-    // console.log(response_login.data);
-    // debugger;
-    // dating_pages.Console("Testing login API", response_login.data);
-    // debugger;
+    const login_url = `${dating_pages.baseURL}/login`;
+    event.preventDefault();
+    const response_login = await dating_pages.postAPI(login_url, postData);
+    console.log("response_login");
 
-    // -- API Manual Test
-    const login_url = "http://127.0.0.1:8000/api/login";
-    axios
-      .post(login_url, {
-        email: "test1@test.com",
-        password:
-          "$2y$10$cNpkrs.apGku6Nb5RKyYXOB5HIm0WsNOPO4KDxtPM4D9m1jPna/eS",
-      })
-      .then(function (response) {
-        console.log(response);
-        debugger;
-      })
-      .catch(function (error) {
-        console.log(error);
-        debugger;
-      });
-    // const response_login = dating_pages.postAPI(login_url, postData);
-    // console.log(response_login.data);
-    // debugger;
-    // dating_pages.Console("Testing login API", response_login.data);
+    dating_pages.Console("Testing login API", response_login);
     debugger;
   });
-
   // -- -- Sign Up
-
-  let signUpSubmit = document.querySelector("#signUpSubmit");
-
-  signUpSubmit.addEventListener("click", () => {
-    let signUpName = document.querySelector("#signUpName");
-    let signUpEmail = document.querySelector("#signUpEmail");
-    let dateOfBirth = document.querySelector("#dob");
-    let signUpPass = document.querySelector("#signUpPass");
-    let location = "x";
-    let selectedGender = document.querySelector("#selectedGender"); // 0 male; 1 female
-    let interests = "Edit Interests";
-
-    let postData = {
+  signUpSubmit.addEventListener("click", async (event) => {
+    const signUpName = document.getElementById("signUpName");
+    const signUpEmail = document.getElementById("signUpEmail");
+    const dateOfBirth = document.getElementById("dob");
+    const signUpPass = document.getElementById("signUpPass");
+    const location = "x";
+    const selectedGender = document.getElementById("selectedGender"); // 0 male; 1 female
+    const interests = "Edit Interests";
+    const postData = {
       name: signUpName.value,
       email: signUpEmail.value,
       dob: dateOfBirth.value,
@@ -151,21 +97,9 @@ dating_pages.load_login = async () => {
       gender_preference: selectedGender.value,
       interests: interests,
     };
-
-    console.log(postData);
-    debugger;
-    // Verify Credentials then add
-    const login_url = "http://127.0.0.1:8000/api/register";
-    axios
-      .post(login_url, postData)
-      .then(function (response) {
-        console.log("success", response);
-        debugger;
-      })
-      .catch(function (error) {
-        console.log(error);
-        debugger;
-      });
-    debugger;
+    // -- API Section
+    const signup_url = `${dating_pages.baseURL}/register`;
+    const response_signup = await dating_pages.postAPI(signup_url, postData);
+    dating_pages.Console("Testing login API", response_signup);
   });
 };
