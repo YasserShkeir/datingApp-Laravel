@@ -159,7 +159,7 @@ dating_pages.load_login = async () => {
     axios
       .post(login_url, postData)
       .then(function (response) {
-        console.log(response);
+        console.log("success", response);
         debugger;
       })
       .catch(function (error) {
