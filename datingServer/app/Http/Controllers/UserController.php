@@ -19,9 +19,13 @@ class UserController extends Controller
     // }
 
 
-    public function getUsers()
+    public function getUsers(Request $request)
     {
-        $data = User::all();
+        // $request->validate([
+        //     'id' => 'required|string',
+        // ]);
+
+        $data = User::all()->except(Auth::id());
 
         return response()->json([
             'status' => 'success',

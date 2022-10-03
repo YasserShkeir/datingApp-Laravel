@@ -9,17 +9,6 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    // function logintest()
-    // {
-    //     // $email = ""; ////
-    //     // $password = ""; ////hash
-
-    //     return response()->json([
-    //         "status" => "success",
-    //         "message" => "hi"
-    //     ]);
-    // }
-
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
@@ -87,7 +76,7 @@ class AuthController extends Controller
             'user' => $user,
             'authorisation' => [
                 'token' => $token,
-                'type' => 'bearer ',
+                'type' => 'Bearer ',
             ]
         ]);
     }

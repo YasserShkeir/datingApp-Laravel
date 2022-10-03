@@ -139,11 +139,21 @@ dating_pages.load_landing = async () => {
     "#landing-content-closest .user-cards"
   );
 
-  closeUsers.innerHTML += userCardCaller(
-    1,
-    "./assets/default.jpg",
-    "Yasser Shkeir",
-    21,
-    "Beirut"
-  );
+  const nearbyUsers = `${dating_pages.baseURL}/users`;
+  const response_nearbyUsers = await dating_pages.postAPI(nearbyUsers);
+  dating_pages.Console("Testing landingpage API", response_nearbyUsers);
+
+  const date = new Date();
+  let year = date.getFullYear();
+
+  response_nearbyUsers.data.data.forEach((user) => {
+    console.log(user);
+    closeUsers.innerHTML += userCardCaller(
+      user.id,
+      "./assets/default.jpg",
+      user.name,
+      year - user.dob.substring(0, 4),
+      user.location
+    );
+  });
 };
