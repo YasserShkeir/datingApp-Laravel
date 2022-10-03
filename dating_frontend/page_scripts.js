@@ -74,11 +74,15 @@ dating_pages.getAPI = async (api_url) => {
   }
 };
 
-dating_pages.postAPI = async (api_url, api_data, api_token = null) => {
+dating_pages.postAPI = async (
+  api_url,
+  api_data,
+  api_token = localStorage.getItem("jwt")
+) => {
   try {
     return await axios.post(api_url, api_data, {
       headers: {
-        Authorization: "token " + api_token,
+        Authorization: "Bearer " + api_token,
       },
     });
   } catch (error) {

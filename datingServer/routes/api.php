@@ -12,7 +12,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh');
 });
 
-Route::post('users', [UserController::class, 'getUsers']);
 
-Route::group(["middleware" => "jwt"], function () {
+Route::group(["middleware" => "auth:api"], function () {
+    Route::post('users', [UserController::class, 'getUsers']);
 });
