@@ -2,6 +2,32 @@ const dating_pages = {};
 
 dating_pages.baseURL = "http://127.0.0.1:8000/api";
 
+// Get user coordinates, store them at signup
+let getCoordintes = () => {
+  var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  };
+
+  function success(pos) {
+    var crd = pos.coords;
+    var lat = crd.latitude.toString();
+    var lng = crd.longitude.toString();
+    var coordinates = [lat, lng];
+    console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+    return;
+  }
+
+  function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  navigator.geolocation.getCurrentPosition(success, error, options);
+};
+
+getCoordintes();
+
 dating_pages.Console = (title, values, oneValue = true) => {
   console.log("---" + title + "---");
   if (oneValue) {
@@ -143,9 +169,11 @@ dating_pages.load_landing = async () => {
   const response_nearbyUsers = await dating_pages.postAPI(nearbyUsers);
   dating_pages.Console("Testing landingpage API", response_nearbyUsers);
 
+  // Get current year to calculate age of users
   const date = new Date();
   let year = date.getFullYear();
 
+  // Loop through retrieved Users and add them on the frontend
   response_nearbyUsers.data.data.forEach((user) => {
     console.log(user);
     closeUsers.innerHTML += userCardCaller(
