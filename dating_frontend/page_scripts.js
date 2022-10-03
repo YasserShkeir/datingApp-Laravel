@@ -3,30 +3,57 @@ const dating_pages = {};
 dating_pages.baseURL = "http://127.0.0.1:8000/api";
 
 // Get user coordinates, store them at signup
-let getCoordintes = () => {
-  var options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0,
-  };
+let coordinates = [];
 
-  function success(pos) {
-    var crd = pos.coords;
-    var lat = crd.latitude.toString();
-    var lng = crd.longitude.toString();
-    var coordinates = [lat, lng];
-    console.log(`Latitude: ${lat}, Longitude: ${lng}`);
-    return;
-  }
+// const getCoordintes = () => {
+//   const options = {
+//     enableHighAccuracy: true,
+//     timeout: 5000,
+//     maximumAge: 0,
+//   };
 
-  function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
+//   function success(pos) {
+//     let crd = pos.coords;
+//     let lat = crd.latitude.toString();
+//     let lng = crd.longitude.toString();
+//     coordinates.push(lat);
+//     coordinates.push(lng);
+//     console.log(coordinates);
+//     displayUsers();
+//   }
 
-  navigator.geolocation.getCurrentPosition(success, error, options);
-};
+//   function error(err) {
+//     console.warn(`ERROR(${err.code}): ${err.message}`);
+//   }
 
-getCoordintes();
+//   navigator.geolocation.getCurrentPosition(success, error, options);
+// };
+
+// getCoordintes();
+
+//This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
+function calcCrow(lat1, lon1, lat2, lon2) {
+  var R = 6371; // km
+  var dLat = toRad(lat2 - lat1);
+  var dLon = toRad(lon2 - lon1);
+  var lat1 = toRad(lat1);
+  var lat2 = toRad(lat2);
+
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d;
+}
+
+// Converts numeric degrees to radians
+function toRad(Value) {
+  return (Value * Math.PI) / 180;
+}
+
+alert(calcCrow(59.3293371, 13.4877472, 59.3225525, 13.4619422).toFixed(2));
+//
 
 dating_pages.Console = (title, values, oneValue = true) => {
   console.log("---" + title + "---");
@@ -115,7 +142,7 @@ dating_pages.load_login = async () => {
     const signUpEmail = document.getElementById("signUpEmail");
     const dateOfBirth = document.getElementById("dob");
     const signUpPass = document.getElementById("signUpPass");
-    const location = navigator.geolocation.getCurrentPosition;
+    const location = `${coordinates[0]},${coordinates[1]}`;
     const selectedGender = document.getElementById("selectedGender"); // 0 male; 1 female
     const interests = "Edit Interests";
     const postData = {
@@ -123,7 +150,7 @@ dating_pages.load_login = async () => {
       email: signUpEmail.value,
       dob: dateOfBirth.value,
       password: signUpPass.value,
-      location: "Beirut",
+      location: location,
       gender_preference: selectedGender.value,
       interests: interests,
     };
@@ -144,12 +171,47 @@ dating_pages.load_login = async () => {
 };
 
 dating_pages.load_landing = async () => {
-  const userCardCaller = (id, imageSrc, userName, age, location) => {
-    const card = `<div class="flex-col user-card">
+  const options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  };
+
+  function success(pos) {
+    let crd = pos.coords;
+    let lat = crd.latitude.toString();
+    let lng = crd.longitude.toString();
+    coordinates.push(lat);
+    coordinates.push(lng);
+    console.log(coordinates);
+    displayUsers();
+  }
+
+  function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  navigator.geolocation.getCurrentPosition(success, error, options);
+
+  const displayUsers = async () => {
+    const userCardCaller = (id, imageSrc, userName, age, location) => {
+      console.log(location.split(","));
+      let distance = "Allow Location";
+      if (coordinates[0]) {
+        console.log("nicecenicenice");
+        distance = calcCrow(
+          location.split(",")[0],
+          location.split(",")[1],
+          coordinates[0],
+          coordinates[1]
+        );
+      }
+
+      const card = `<div class="flex-col user-card">
                     <img src="${imageSrc}" />
                     <div class="user-card-name">${userName}</div>
                     <div class="user-card-age">Age: ${age}</div>
-                    <div class="user-card-location">${location}</div>
+                    <div class="user-card-location">${distance}</div>
                     <div class="flex user-card-controls">
                       <div class="user-card-controls-heart" title="Like">&#10084;</div>
                       <div class="user-card-controls-star" title="Add to Favorites">
@@ -158,30 +220,31 @@ dating_pages.load_landing = async () => {
                     </div>
                   </div>`;
 
-    return card;
-  };
+      return card;
+    };
 
-  const closeUsers = document.querySelector(
-    "#landing-content-closest .user-cards"
-  );
-
-  const nearbyUsers = `${dating_pages.baseURL}/users`;
-  const response_nearbyUsers = await dating_pages.postAPI(nearbyUsers);
-  dating_pages.Console("Testing landingpage API", response_nearbyUsers);
-
-  // Get current year to calculate age of users
-  const date = new Date();
-  let year = date.getFullYear();
-
-  // Loop through retrieved Users and add them on the frontend
-  response_nearbyUsers.data.data.forEach((user) => {
-    console.log(user);
-    closeUsers.innerHTML += userCardCaller(
-      user.id,
-      "./assets/default.jpg",
-      user.name,
-      year - user.dob.substring(0, 4),
-      user.location
+    const closeUsers = document.querySelector(
+      "#landing-content-closest .user-cards"
     );
-  });
+
+    const nearbyUsers = `${dating_pages.baseURL}/users`;
+    const response_nearbyUsers = await dating_pages.postAPI(nearbyUsers);
+    dating_pages.Console("Testing landingpage API", response_nearbyUsers);
+
+    // Get current year to calculate age of users
+    const date = new Date();
+    let year = date.getFullYear();
+
+    // Loop through retrieved Users and add them on the frontend
+    response_nearbyUsers.data.data.forEach((user) => {
+      // console.log(user);
+      closeUsers.innerHTML += userCardCaller(
+        user.id,
+        "./assets/default.jpg",
+        user.name,
+        year - user.dob.substring(0, 4),
+        user.location
+      );
+    });
+  };
 };
