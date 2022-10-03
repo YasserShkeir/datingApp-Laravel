@@ -2,38 +2,11 @@ const dating_pages = {};
 
 dating_pages.baseURL = "http://127.0.0.1:8000/api";
 
-// Get user coordinates, store them at signup
 let coordinates = [];
-
-// const getCoordintes = () => {
-//   const options = {
-//     enableHighAccuracy: true,
-//     timeout: 5000,
-//     maximumAge: 0,
-//   };
-
-//   function success(pos) {
-//     let crd = pos.coords;
-//     let lat = crd.latitude.toString();
-//     let lng = crd.longitude.toString();
-//     coordinates.push(lat);
-//     coordinates.push(lng);
-//     console.log(coordinates);
-//     displayUsers();
-//   }
-
-//   function error(err) {
-//     console.warn(`ERROR(${err.code}): ${err.message}`);
-//   }
-
-//   navigator.geolocation.getCurrentPosition(success, error, options);
-// };
-
-// getCoordintes();
 
 //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
 function calcCrow(lat1, lon1, lat2, lon2) {
-  var R = 6371; // km
+  var R = 6371; // use earth radius in km cz science
   var dLat = toRad(lat2 - lat1);
   var dLon = toRad(lon2 - lon1);
   var lat1 = toRad(lat1);
@@ -52,8 +25,9 @@ function toRad(Value) {
   return (Value * Math.PI) / 180;
 }
 
-//
+// Distance finding function END
 
+// Console Tracker
 dating_pages.Console = (title, values, oneValue = true) => {
   console.log("---" + title + "---");
   if (oneValue) {
@@ -66,6 +40,7 @@ dating_pages.Console = (title, values, oneValue = true) => {
   console.log("--/" + title + "---");
 };
 
+// GET API function
 dating_pages.getAPI = async (api_url) => {
   try {
     return await axios(api_url);
@@ -74,6 +49,7 @@ dating_pages.getAPI = async (api_url) => {
   }
 };
 
+// POST API function - takes the current user api token
 dating_pages.postAPI = async (
   api_url,
   api_data,
@@ -196,54 +172,67 @@ dating_pages.load_landing = async () => {
   navigator.geolocation.getCurrentPosition(success, error, options);
 
   const displayUsers = async () => {
-    const userCardCaller = (id, imageSrc, userName, age, location) => {
-      let distance = "Allow Location";
-      if (coordinates[0]) {
-        distance = calcCrow(
-          location.split(",")[0],
-          location.split(",")[1],
-          coordinates[0],
-          coordinates[1]
-        ).toFixed(2);
-      }
-
-      const card = `<div class="flex-col user-card">
-                    <img src="${imageSrc}" />
-                    <div class="user-card-name">${userName}</div>
-                    <div class="user-card-age">Age: ${age}</div>
-                    <div class="user-card-location">Distance: ${distance} Km</div>
-                    <div class="flex user-card-controls">
-                      <div class="user-card-controls-heart" title="Like">&#10084;</div>
-                      <div class="user-card-controls-star" title="Add to Favorites">
-                        &#9733;
+    const userCardCaller = (id, imageSrc, userName, age, distance) => {
+      // *.*.*.* ASK QUESTIONS about order HERE *.*.*.*
+      // create user card component
+      const card = `<div class="flex-col user-card" style="order: index">
+                      <img src="${imageSrc}" />
+                      <div class="user-card-name">${userName}</div>
+                      <div class="user-card-age">Age: ${age}</div>
+                      <div class="user-card-location">Distance: ${distance} Km</div>
+                      <div class="flex user-card-controls">
+                        <div class="user-card-controls-heart" title="Like">&#10084;</div>
+                        <div class="user-card-controls-star" title="Add to Favorites">
+                          &#9733;
+                        </div>
                       </div>
-                    </div>
-                  </div>`;
+                    </div>`;
 
       return card;
     };
 
+    // Get nearby users parent element to add cards in it
     const closeUsers = document.querySelector(
       "#landing-content-closest .user-cards"
     );
 
+    // API magic happens here
     const nearbyUsers = `${dating_pages.baseURL}/users`;
     const response_nearbyUsers = await dating_pages.postAPI(nearbyUsers);
-    dating_pages.Console("Testing landingpage API", response_nearbyUsers);
+    dating_pages.Console("Testing Nearby Users API", response_nearbyUsers);
 
     // Get current year to calculate age of users
     const date = new Date();
     let year = date.getFullYear();
 
+    // *.*.*.* ASK QUESTIONS ABOUT IMAGE HERE *.*.*.*
     // Loop through retrieved Users and add them on the frontend
+
+    const users = [];
     response_nearbyUsers.data.data.forEach((user) => {
-      // console.log(user);
+      users.push({
+        ...user,
+        distance: calcCrow(
+          user.location.split(",")[0],
+          user.location.split(",")[1],
+          coordinates[0],
+          coordinates[1]
+        ).toFixed(2),
+      });
+    });
+
+    users.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
+
+    console.log(users);
+
+    users.forEach((user) => {
+      console.log(parseFloat(user.distance));
       closeUsers.innerHTML += userCardCaller(
         user.id,
-        "./assets/default.jpg",
+        "./assets/default.jpg", // *.*.*.* ASK QUESTIONS HERE *.*.*.*
         user.name,
         year - user.dob.substring(0, 4),
-        user.location
+        user.distance
       );
     });
   };
