@@ -52,7 +52,6 @@ function toRad(Value) {
   return (Value * Math.PI) / 180;
 }
 
-alert(calcCrow(59.3293371, 13.4877472, 59.3225525, 13.4619422).toFixed(2));
 //
 
 dating_pages.Console = (title, values, oneValue = true) => {
@@ -183,7 +182,6 @@ dating_pages.load_landing = async () => {
     let lng = crd.longitude.toString();
     coordinates.push(lat);
     coordinates.push(lng);
-    console.log(coordinates);
     displayUsers();
   }
 
@@ -195,23 +193,21 @@ dating_pages.load_landing = async () => {
 
   const displayUsers = async () => {
     const userCardCaller = (id, imageSrc, userName, age, location) => {
-      console.log(location.split(","));
       let distance = "Allow Location";
       if (coordinates[0]) {
-        console.log("nicecenicenice");
         distance = calcCrow(
           location.split(",")[0],
           location.split(",")[1],
           coordinates[0],
           coordinates[1]
-        );
+        ).toFixed(2);
       }
 
       const card = `<div class="flex-col user-card">
                     <img src="${imageSrc}" />
                     <div class="user-card-name">${userName}</div>
                     <div class="user-card-age">Age: ${age}</div>
-                    <div class="user-card-location">${distance}</div>
+                    <div class="user-card-location">Distance: ${distance} Km</div>
                     <div class="flex user-card-controls">
                       <div class="user-card-controls-heart" title="Like">&#10084;</div>
                       <div class="user-card-controls-star" title="Add to Favorites">
