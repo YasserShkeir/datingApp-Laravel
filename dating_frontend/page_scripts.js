@@ -75,10 +75,12 @@ dating_pages.load_login = async () => {
     event.preventDefault();
     const response_login = await dating_pages.postAPI(login_url, postData);
     dating_pages.Console("Testing login API", response_login);
-    console.log(response_login.data.authorisation.token);
-    localStorage.setItem("jwt", response_login.data.data.authorisation.token);
+    localStorage.setItem("jwt", response_login.data.authorisation.token);
 
-    debugger;
+    // if (localStorage.getItem("jwt")) {
+    //   window.open("./landingPage.html", "_self");
+    // } else {
+    // }
   });
 
   // -- -- Sign Up
@@ -95,14 +97,23 @@ dating_pages.load_login = async () => {
       email: signUpEmail.value,
       dob: dateOfBirth.value,
       password: signUpPass.value,
-      location: location,
+      location: "Beirut",
       gender_preference: selectedGender.value,
       interests: interests,
     };
+    console.log(postData);
+    debugger;
     // -- API Section
+    event.preventDefault();
     const signup_url = `${dating_pages.baseURL}/register`;
     const response_signup = await dating_pages.postAPI(signup_url, postData);
     dating_pages.Console("Testing login API", response_signup);
+    debugger;
+    if (response_signup) {
+      alert("Successfully signed up");
+    } else {
+      alert("Please use a different email");
+    }
   });
 };
 
