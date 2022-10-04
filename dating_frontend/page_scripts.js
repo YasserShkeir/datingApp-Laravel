@@ -72,6 +72,15 @@ dating_pages.loadFor = (page) => {
   eval("dating_pages.load_" + page + "();");
 };
 
+const logoutCaller = () => {
+  const logoutButton = document.getElementById("logout");
+
+  logoutButton.addEventListener("click", () => {
+    localStorage.clear();
+    window.open("./index.html", "_self");
+  });
+};
+
 const locationUpdater = async () => {
   const locationDetector = document.getElementById("locationDetector");
 
@@ -88,11 +97,9 @@ const locationUpdater = async () => {
         let crd = pos.coords;
         let lat = crd.latitude.toString();
         let lng = crd.longitude.toString();
-        coordinates.push(lat);
-        coordinates.push(lng);
 
         let postData = {
-          location: coordinates,
+          location: [lat, lng],
         };
 
         console.log(postData);
@@ -155,11 +162,6 @@ dating_pages.load_login = async () => {
     const response_login = await dating_pages.postAPI(login_url, postData);
     dating_pages.Console("Testing login API", response_login);
     localStorage.setItem("jwt", response_login.data.authorisation.token);
-
-    // if (localStorage.getItem("jwt")) {
-    //   window.open("./landingPage.html", "_self");
-    // } else {
-    // }
   });
 
   // -- -- Sign Up
@@ -197,8 +199,24 @@ dating_pages.load_login = async () => {
 };
 
 dating_pages.load_landing = async () => {
+  // Calls the logout Function
+  logoutCaller();
+
   // This function is called so that whenever user clicks on update location btn, location is updated
   locationUpdater();
+
+  // -- API Section
+  const retrieveCoords_url = `${dating_pages.baseURL}/editProfile`;
+  const response_retrieveCoords = await dating_pages.postAPI(
+    retrieveCoords_url
+  );
+  dating_pages.Console("Testing Retrieve Image API", response_retrieveCoords);
+
+  let userCoordinates = response_retrieveCoords.data.data.location.replace(
+    /[\[\]"]+/g,
+    ""
+  );
+  console.log("location", userCoordinates);
 
   const options = {
     enableHighAccuracy: true,
@@ -225,7 +243,7 @@ dating_pages.load_landing = async () => {
   // create user card component
   const userCardCaller = (id, imageSrc, userName, age, distance) => {
     const card = `<div class="flex-col user-card" style="order: index">
-                    <img src="${imageSrc}" />
+                    <img src="data:image/jpeg;base64,${imageSrc}" />
                     <div class="user-card-name">${userName}</div>
                     <div class="user-card-age">Age: ${age}</div>
                     <div class="user-card-location">Distance: ${distance} Km</div>
@@ -273,8 +291,8 @@ dating_pages.load_landing = async () => {
         distance: calcCrow(
           user.location.split(",")[0],
           user.location.split(",")[1],
-          parseFloat(coordinates[0]),
-          parseFloat(coordinates[1])
+          userCoordinates.split(",")[0],
+          userCoordinates.split(",")[1]
         ).toFixed(2),
       });
     });
@@ -295,6 +313,9 @@ dating_pages.load_landing = async () => {
 };
 
 dating_pages.load_editProf = async () => {
+  // Calls the logout Function
+  logoutCaller();
+
   // This function is called so that whenever user clicks on update location btn, location is updated
   locationUpdater();
 
