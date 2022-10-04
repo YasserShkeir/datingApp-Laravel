@@ -9,7 +9,7 @@
   <body>
     <!-- Navigation Bar not Logged In -->
     <nav class="flex">
-      <a href="./index.html"
+      <a href="./landingPage.html"
         ><img src="./assets/Dating Design Transparent.png"
       /></a>
       <div class="flex" id="nav-left">
@@ -32,15 +32,8 @@
       </div>
     </nav>
 
-    <!-- Landing Page Content -->
-    <section class="flex-col landing-section" id="landing-content-favorites">
-      <div class="section-label">Favorites</div>
-      <div class="flex user-cards"></div>
-    </section>
-    <section class="flex-col landing-section" id="landing-content-closest">
-      <div class="section-label">Users Near You</div>
-      <div class="flex user-cards"></div>
-    </section>
+    <!-- Edit Profile Content -->
+    <section class="flex" id="editProf"></section>
 
     <!-- FORMS -->
     <!-- LOGOUT FORM -->
@@ -49,7 +42,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
     <script src="./page_scripts.js"></script>
     <script>
-      dating_pages.loadFor("landing");
+      dating_pages.loadFor("editProf");
     </script>
   </body>
 </html>
