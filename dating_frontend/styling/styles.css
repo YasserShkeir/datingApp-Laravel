@@ -261,12 +261,6 @@ footer h3 {
   border-radius: 25px;
 }
 
-#landing-content-favorites {
-}
-
-#landing-content-closest {
-}
-
 .section-label {
   font-size: 24px;
   margin-bottom: 10px;
@@ -339,6 +333,8 @@ footer h3 {
 .user-card-controls div:hover:last-child {
   color: #d7d732;
 }
+
+/* Edit Profile Content */
 
 @media only screen and (max-width: 600px) {
   nav img {
