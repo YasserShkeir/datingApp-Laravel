@@ -64,6 +64,9 @@ class UserController extends Controller
         if ($request['name']) {
             $user->name = $request['name'];
         }
+        if ($request['email']) {
+            $user->email = $request['email'];
+        }
 
         for ($x = 0; $x < count($request->input()); $x++) {
             echo $x;
