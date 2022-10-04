@@ -99,7 +99,6 @@ footer h3 {
   padding: 10px 15px;
   border-radius: 25px;
   border: none;
-  cursor: url("../assets/redHeartCursor.png"), auto;
   font-size: 20px;
 }
 
@@ -195,7 +194,6 @@ footer h3 {
   transition: 0.3s;
   padding: 10px 15px;
   border-radius: 25px;
-  border: 2px solid #544f4d;
 }
 
 .form-row input:focus,
@@ -215,6 +213,11 @@ footer h3 {
 }
 
 /* Login Page Content */
+#signIn:hover,
+#signUp:hover {
+  cursor: url("../assets/redHeartCursor.png"), auto;
+}
+
 #login-content {
   height: auto; /* Height of page minus heigh of nav + footer */
   padding: 5% 10%;
@@ -336,6 +339,40 @@ footer h3 {
 
 /* Edit Profile Content */
 
+#editProf {
+  width: 100%;
+  height: fit-content;
+  padding: 2% 6%;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+#editProf .section-label {
+  color: #544f4d;
+}
+
+#editProfInputs {
+  min-width: 400px;
+  width: 90%;
+  justify-content: space-between;
+  height: fit-content;
+}
+
+.editProfCol {
+  min-width: 40%;
+  width: 100%;
+  gap: 20px;
+  align-items: center;
+}
+
+#locationDetector {
+  margin: 50px 10px;
+}
+
+#editProfSubmit {
+  margin: auto 50px;
+}
+
 @media only screen and (max-width: 600px) {
   nav img {
     display: none;
@@ -344,6 +381,10 @@ footer h3 {
   #nav-right {
     flex-grow: 1;
     justify-content: flex-end;
+  }
+
+  #editProfInputs {
+    flex-direction: column;
   }
 }
 

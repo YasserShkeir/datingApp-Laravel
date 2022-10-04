@@ -242,4 +242,29 @@ dating_pages.load_landing = async () => {
   };
 };
 
-dating_pages.load_editProf = async () => {};
+dating_pages.load_editProf = async () => {
+  const locationDetector = document.getElementById("locationDetector");
+
+  locationDetector.addEventListener("click", () => {
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+
+    function success(pos) {
+      let crd = pos.coords;
+      let lat = crd.latitude.toString();
+      let lng = crd.longitude.toString();
+      coordinates.push(lat);
+      coordinates.push(lng);
+      console.log(coordinates);
+    }
+
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  });
+};
