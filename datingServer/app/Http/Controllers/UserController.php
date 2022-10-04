@@ -14,12 +14,9 @@ class UserController extends Controller
     {
         $currUserID = Auth::id();
 
-
-
         $request->validate([
             'id' => 'required',
         ]);
-
 
         $favID = $request->only('id');
 
@@ -38,9 +35,9 @@ class UserController extends Controller
 
     public function getFavorites()
     {
+        $users = User::join('favorites', 'users.id', '=', 'favorites.user2_id')->where('favorites.user1_id', '=', Auth::id())->get();
 
-
-        $users = User::join('favorites', 'users.id', '=', 'favorites.user2_id')->get(['users.*'])->except(Auth::id());
+        // $users = DB::table('users') 
 
         if (Auth::id()) {
             if (!$users) {
@@ -59,6 +56,31 @@ class UserController extends Controller
         ]);
     }
 
+    public function editProfile(Request $request)
+    {
+
+        $user = Auth::user();
+
+        if ($request['name']) {
+            $user->name = $request['name'];
+        }
+
+        for ($x = 0; $x < count($request->input()); $x++) {
+            echo $x;
+        }
+
+
+
+
+        // Hash::make($request->password)
+
+        $user->save();
+
+        return response()->json([
+            'status' => 'success',
+            "data" => $user
+        ]);
+    }
 
     public function getUsers()
     {

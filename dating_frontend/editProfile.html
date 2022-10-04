@@ -42,58 +42,63 @@
         <div class="flex-col editProfCol">
           <div class="flex-col form-row editProfRow">
             <label>Edit Name</label>
-            <input type="text" />
+            <input type="text" id="editProfName" />
           </div>
           <div class="flex-col form-row editProfRow">
             <label>Edit Email</label>
-            <input type="email" />
+            <input type="email" id="editProfEmail" />
           </div>
           <div class="flex-col form-row editProfRow">
             <label>Edit Phone Number</label>
-            <input type="tel" />
+            <input type="tel" id="editProfPhone" />
           </div>
           <div class="flex-col form-row editProfRow">
             <label>Edit Date of Birth</label>
-            <input type="date" />
+            <input type="date" id="editProfDOB" />
           </div>
           <div class="flex-col form-row editProfRow">
-            <label>Edit Gender</label>
-            <select>
-              <option>Male</option>
-              <option>Female</option>
-            </select>
+            <label>Edit Password</label>
+            <input type="text" id="editProfPassword" />
           </div>
+
           <div class="flex-col form-row editProfRow">
-            <label>Edit Gender Preferences</label>
-            <select>
-              <option>Male</option>
-              <option>Female</option>
-            </select>
+            <label>Edit Image</label>
+            <input type="file" id="editProfImage" />
           </div>
         </div>
         <div class="flex-col editProfCol">
           <div class="flex-col form-row editProfRow">
-            <label>Edit Image</label>
-            <input type="file" />
+            <label>Edit Gender</label>
+            <select id="editProfGender">
+              <option value="0">Male</option>
+              <option value="1">Female</option>
+            </select>
+          </div>
+          <div class="flex-col form-row editProfRow">
+            <label>Edit Gender Preferences</label>
+            <select id="editProfGenderPref">
+              <option value="1">Female</option>
+              <option value="0">Male</option>
+            </select>
           </div>
           <div class="flex-col form-row editProfRow">
             <label>Edit Interests</label>
-            <input type="text" />
+            <input type="text" id="editProfInterests" />
           </div>
           <div class="flex-col form-row editProfRow">
             <label>Edit Bio</label>
-            <textarea></textarea>
+            <textarea id="editProfBio"></textarea>
           </div>
           <div class="flex-col form-row editProfRow">
             <label>Incognito Mode</label>
-            <select>
-              <option>True</option>
-              <option>False</option>
+            <select id="editProfIncognito">
+              <option value="0">False</option>
+              <option value="1">True</option>
             </select>
           </div>
-          <button class="btn btn-filled" id="editProfSubmit">Submit</button>
         </div>
       </div>
+      <button class="btn btn-filled" id="editProfSubmit">Submit</button>
     </section>
 
     <!-- FORMS -->
