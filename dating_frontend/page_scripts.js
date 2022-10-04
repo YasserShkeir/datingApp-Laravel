@@ -205,6 +205,17 @@ dating_pages.load_landing = async () => {
   // This function is called so that whenever user clicks on update location btn, location is updated
   locationUpdater();
 
+  // Check Fav if empty and fill it with something
+  let text = document.querySelector(
+    "#landing-content-favorites .user-cards"
+  ).innerHTML;
+  console.log(text);
+  if (!text) {
+    document.querySelector(
+      "#landing-content-favorites .user-cards"
+    ).innerHTML += "<h3>No Favorites Yet...</h3>";
+  }
+
   // -- API Section
   const retrieveCoords_url = `${dating_pages.baseURL}/editProfile`;
   const response_retrieveCoords = await dating_pages.postAPI(
@@ -240,16 +251,26 @@ dating_pages.load_landing = async () => {
   navigator.geolocation.getCurrentPosition(success, error, options);
 
   // create user card component
-  const userCardCaller = (id, imageSrc, userName, age, distance) => {
+  const userCardCaller = (
+    id,
+    imageSrc,
+    userName,
+    age,
+    interests,
+    bio,
+    distance
+  ) => {
     const card = `<div class="flex-col user-card" style="order: index">
                     <img src="data:image/jpeg;base64,${imageSrc}" />
                     <div class="user-card-name">${userName}</div>
                     <div class="user-card-age">Age: ${age}</div>
+                    <div class="user-card-interests">Interests: ${interests}</div>
+                    <div class="user-card-bio">Bio: ${bio}</div>
                     <div class="user-card-location">Distance: ${distance} Km</div>
                     <div class="flex user-card-controls">
                       <div class="user-card-controls-heart" title="Like">&#10084;</div>
-                      <div class="user-card-controls-star" title="Add to Favorites">
-                        &#9733;
+                      <div class="user-card-controls-block" title="Block User">
+                        &#128683;
                       </div>
                     </div>
                   </div>`;
@@ -280,6 +301,7 @@ dating_pages.load_landing = async () => {
     }
 
     jsonLink.forEach((user) => {
+      console.log("user: ", user);
       // user.location = user.location.replaceAll(`"`, "");
       // user.location = user.location.replaceAll(`[`, "");
       // user.location = user.location.replaceAll(`]`, "");
@@ -305,6 +327,8 @@ dating_pages.load_landing = async () => {
         user.image, // *.*.*.* ASK QUESTIONS HERE *.*.*.*
         user.name,
         year - user.dob.substring(0, 4),
+        user.interests,
+        user.bio,
         user.distance
       );
     });

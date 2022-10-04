@@ -289,9 +289,9 @@ footer h3 {
 
 .user-card {
   background-color: #fff;
-  min-width: 125px;
+  min-width: 200px;
   width: fit-content;
-  max-width: 150px;
+  max-width: 250px;
   height: 100%;
   padding: 5px;
   box-sizing: border-box;
@@ -299,12 +299,14 @@ footer h3 {
 }
 
 .user-card img {
-  max-width: 110px;
+  max-width: 200px;
   margin-bottom: 5px;
 }
 
 .user-card-name,
 .user-card-age,
+.user-card-interests,
+.user-card-bio,
 .user-card-location {
   width: 95%;
   text-align: left !important;
@@ -312,12 +314,16 @@ footer h3 {
 
 .user-card-name {
   font-weight: 500;
-  font-size: 15px;
+  font-size: 18px;
 }
 
-.user-card-age,
-.user-card-location {
-  font-size: 12px;
+.user-card-age {
+  font-size: 14px;
+}
+
+.user-card-interests,
+.user-card-bio {
+  font-size: 16px;
 }
 
 .user-card-controls {
@@ -337,10 +343,6 @@ footer h3 {
 
 .user-card-controls div:hover:first-child {
   color: #ef5241;
-}
-
-.user-card-controls div:hover:last-child {
-  color: #d7d732;
 }
 
 /* Edit Profile Content */
