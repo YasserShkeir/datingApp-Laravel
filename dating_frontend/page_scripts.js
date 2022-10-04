@@ -163,6 +163,7 @@ dating_pages.load_landing = async () => {
     coordinates.push(lat);
     coordinates.push(lng);
     displayUsers();
+    displayFavorites();
   }
 
   function error(err) {
@@ -171,26 +172,25 @@ dating_pages.load_landing = async () => {
 
   navigator.geolocation.getCurrentPosition(success, error, options);
 
-  const displayUsers = async () => {
-    const userCardCaller = (id, imageSrc, userName, age, distance) => {
-      // *.*.*.* ASK QUESTIONS about order HERE *.*.*.*
-      // create user card component
-      const card = `<div class="flex-col user-card" style="order: index">
-                      <img src="${imageSrc}" />
-                      <div class="user-card-name">${userName}</div>
-                      <div class="user-card-age">Age: ${age}</div>
-                      <div class="user-card-location">Distance: ${distance} Km</div>
-                      <div class="flex user-card-controls">
-                        <div class="user-card-controls-heart" title="Like">&#10084;</div>
-                        <div class="user-card-controls-star" title="Add to Favorites">
-                          &#9733;
-                        </div>
+  // create user card component
+  const userCardCaller = (id, imageSrc, userName, age, distance) => {
+    const card = `<div class="flex-col user-card" style="order: index">
+                    <img src="${imageSrc}" />
+                    <div class="user-card-name">${userName}</div>
+                    <div class="user-card-age">Age: ${age}</div>
+                    <div class="user-card-location">Distance: ${distance} Km</div>
+                    <div class="flex user-card-controls">
+                      <div class="user-card-controls-heart" title="Like">&#10084;</div>
+                      <div class="user-card-controls-star" title="Add to Favorites">
+                        &#9733;
                       </div>
-                    </div>`;
+                    </div>
+                  </div>`;
 
-      return card;
-    };
+    return card;
+  };
 
+  const displayUsers = async () => {
     // Get nearby users parent element to add cards in it
     const closeUsers = document.querySelector(
       "#landing-content-closest .user-cards"
@@ -205,13 +205,58 @@ dating_pages.load_landing = async () => {
     const date = new Date();
     let year = date.getFullYear();
 
-    // *.*.*.* ASK QUESTIONS ABOUT IMAGE HERE *.*.*.*
-    // Loop through retrieved Users and add them on the frontend
-
+    // Add users to an array for us to sort them later
     const users = [];
     response_nearbyUsers.data.data.forEach((user) => {
       users.push({
         ...user,
+        // Add distance from current user to each user object
+        distance: calcCrow(
+          user.location.split(",")[0],
+          user.location.split(",")[1],
+          coordinates[0],
+          coordinates[1]
+        ).toFixed(2),
+      });
+    });
+
+    users.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
+
+    // Loop through Users and add them on the frontend
+    users.forEach((user) => {
+      closeUsers.innerHTML += userCardCaller(
+        user.id,
+        "./assets/default.jpg", // *.*.*.* ASK QUESTIONS HERE *.*.*.*
+        user.name,
+        year - user.dob.substring(0, 4),
+        user.distance
+      );
+    });
+  };
+
+  const displayFavorites = async () => {
+    // Get favorite users parent element to add cards in it
+    const favUsers = document.querySelector(
+      "#landing-content-favorites .user-cards"
+    );
+
+    // API magic happens here
+    const favoriteUsers = `${dating_pages.baseURL}/favorites`;
+    const response_favoriteUsers = await dating_pages.postAPI(favoriteUsers);
+    dating_pages.Console("Testing Favorite Users API", response_favoriteUsers);
+
+    // Get current year to calculate age of users
+    const date = new Date();
+    let year = date.getFullYear();
+
+    console.log(response_favoriteUsers.data.users);
+
+    // Add users to an array for us to sort them later
+    const users = [];
+    response_favoriteUsers.data.users.forEach((user) => {
+      users.push({
+        ...user,
+        // Add distance from current user to each user object
         distance: calcCrow(
           user.location.split(",")[0],
           user.location.split(",")[1],
@@ -225,9 +270,10 @@ dating_pages.load_landing = async () => {
 
     console.log(users);
 
+    // Loop through Users and add them on the frontend
     users.forEach((user) => {
       console.log(parseFloat(user.distance));
-      closeUsers.innerHTML += userCardCaller(
+      favUsers.innerHTML += userCardCaller(
         user.id,
         "./assets/default.jpg", // *.*.*.* ASK QUESTIONS HERE *.*.*.*
         user.name,

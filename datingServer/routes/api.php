@@ -12,6 +12,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh');
 });
 
+Route::post('favorites', [UserController::class, 'getFavorites']);
+Route::post('addFavorite', [UserController::class, 'addFavorite']);
 
 Route::group(["middleware" => "auth:api"], function () {
     Route::post('users', [UserController::class, 'getUsers']);

@@ -33,20 +33,7 @@
     <!-- Landing Page Content -->
     <section class="flex-col landing-section" id="landing-content-favorites">
       <div class="section-label">Favorites</div>
-      <div class="flex user-cards">
-        <div class="flex-col user-card">
-          <img src="./assets/default.jpg" />
-          <div class="user-card-name">Fname Lname</div>
-          <div class="user-card-age">Age</div>
-          <div class="user-card-location">Location</div>
-          <div class="flex user-card-controls">
-            <div class="user-card-controls-heart" title="Like">&#10084;</div>
-            <div class="user-card-controls-star" title="Add to Favorites">
-              &#9733;
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="flex user-cards"></div>
     </section>
     <section class="flex-col landing-section" id="landing-content-closest">
       <div class="section-label">Users Near You</div>
@@ -63,6 +50,7 @@
     <script src="./page_scripts.js"></script>
     <script>
       dating_pages.loadFor("landing");
+      dating_pages.loadFor("displayFavorites");
     </script>
   </body>
 </html>
