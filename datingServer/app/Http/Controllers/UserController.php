@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -61,23 +62,57 @@ class UserController extends Controller
 
         $user = Auth::user();
 
+        // function attributeRunner($request, $user, $attribute)
+        // {
+        //     if ($request[`$attribute`]) {
+        //         $user->$attribute = $request[`$attribute`];
+        //         return $user->$attribute;
+        //     }
+        // }
+
+        // foreach ($request->except(['password']) as $attribute) {
+        //     echo $attribute;
+        //     print_r(attributeRunner($request, $user, $attribute));
+        // }
+
         if ($request['name']) {
             $user->name = $request['name'];
         }
         if ($request['email']) {
             $user->email = $request['email'];
         }
-
-        for ($x = 0; $x < count($request->input()); $x++) {
-            echo $x;
+        if ($request['password']) {
+            $user->password = Hash::make($request->password);
+        }
+        if ($request['phone_number']) {
+            $user->phone_number = $request['phone_number'];
+        }
+        if ($request['image']) {
+            $user->image = $request['image'];
+        }
+        if ($request['dob']) {
+            $user->dob = $request['dob'];
+        }
+        if ($request['location']) {
+            $user->location = $request['location'];
+        }
+        if ($request['gender']) {
+            $user->gender = $request['gender'];
+        }
+        if ($request['gender_preference']) {
+            $user->gender_preference = $request['gender_preference'];
+        }
+        if ($request['interests']) {
+            $user->interests = $request['interests'];
+        }
+        if ($request['bio']) {
+            $user->bio = $request['bio'];
+        }
+        if ($request['incognito']) {
+            $user->incognito = $request['incognito'];
         }
 
-
-
-
-        // Hash::make($request->password)
-
-        $user->save();
+        // $user->save();
 
         return response()->json([
             'status' => 'success',

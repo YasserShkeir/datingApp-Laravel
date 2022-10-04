@@ -273,6 +273,29 @@ dating_pages.load_editProf = async () => {
     { once: true }
   );
 
+  const imageChecker = document.getElementById("editProfImage");
+  let base64Image = "";
+
+  imageChecker.addEventListener("change", () => {
+    imageUploaded();
+  });
+
+  function imageUploaded() {
+    var file = document.querySelector("input[type=file]")["files"][0];
+
+    var reader = new FileReader();
+
+    reader.onload = function () {
+      base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+
+      imageBase64Stringsep = base64String;
+
+      // alert(imageBase64Stringsep);
+      base64Image = base64String;
+    };
+    reader.readAsDataURL(file);
+  }
+
   const editProfSubmit = document.getElementById("editProfSubmit");
 
   editProfSubmit.addEventListener("click", async (event) => {
@@ -281,7 +304,6 @@ dating_pages.load_editProf = async () => {
     const editProfPhone = document.getElementById("editProfPhone");
     const editProfDOB = document.getElementById("editProfDOB");
     const editProfGender = document.getElementById("editProfGender");
-    const editProfImage = document.getElementById("editProfImage");
     const editProfInterests = document.getElementById("editProfInterests");
     const editProfBio = document.getElementById("editProfBio");
     const editProfIncognito = document.getElementById("editProfIncognito");
@@ -292,7 +314,7 @@ dating_pages.load_editProf = async () => {
       name: editProfName.value,
       email: editProfEmail.value,
       phone_number: editProfPhone.value,
-      image: editProfImage.value,
+      image: base64Image,
       dob: editProfDOB.value,
       password: editProfPassword.value,
       location: `${coordinates[0]},${coordinates[1]}`,
@@ -306,10 +328,10 @@ dating_pages.load_editProf = async () => {
     console.log(postData);
 
     // -- API Section
-    const editProf_url = `${dating_pages.baseURL}/editProfile`;
-    event.preventDefault();
-    const response_login = await dating_pages.postAPI(editProf_url, postData);
-    dating_pages.Console("Testing login API", response_login);
+    // const editProf_url = `${dating_pages.baseURL}/editProfile`;
+    // event.preventDefault();
+    // const response_login = await dating_pages.postAPI(editProf_url, postData);
+    // dating_pages.Console("Testing login API", response_login);
 
     debugger;
   });

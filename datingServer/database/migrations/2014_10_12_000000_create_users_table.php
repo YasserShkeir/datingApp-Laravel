@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('dob');
             $table->string('password');
             $table->string('location');
-            $table->boolean('gender')->nullable(); // 0 male 1 female
+            $table->boolean('gender')->default(0); // 0 male 1 female
             $table->boolean('gender_preference'); // 0 male 1 female
             $table->string('interests');
             $table->string('bio')->nullable($value = true);
