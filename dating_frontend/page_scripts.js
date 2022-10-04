@@ -102,8 +102,6 @@ const locationUpdater = async () => {
           location: [lat, lng],
         };
 
-        console.log(postData);
-
         // -- API Section
         const editLocation_url = `${dating_pages.baseURL}/editProfile`;
         const response_location = await dating_pages.postAPI(
@@ -161,7 +159,12 @@ dating_pages.load_login = async () => {
     event.preventDefault();
     const response_login = await dating_pages.postAPI(login_url, postData);
     dating_pages.Console("Testing login API", response_login);
-    localStorage.setItem("jwt", response_login.data.authorisation.token);
+    if (response_login) {
+      localStorage.setItem("jwt", response_login.data.authorisation.token);
+      window.open("./landingPage.html", "_self");
+    } else {
+      alert("UNAUTHORIZED");
+    }
   });
 
   // -- -- Sign Up
@@ -182,14 +185,11 @@ dating_pages.load_login = async () => {
       gender_preference: selectedGender.value,
       interests: interests,
     };
-    console.log(postData);
-    debugger;
     // -- API Section
     event.preventDefault();
     const signup_url = `${dating_pages.baseURL}/register`;
     const response_signup = await dating_pages.postAPI(signup_url, postData);
     dating_pages.Console("Testing login API", response_signup);
-    debugger;
     if (response_signup) {
       alert("Successfully signed up");
     } else {
@@ -216,7 +216,6 @@ dating_pages.load_landing = async () => {
     /[\[\]"]+/g,
     ""
   );
-  console.log("location", userCoordinates);
 
   const options = {
     enableHighAccuracy: true,
@@ -379,13 +378,9 @@ dating_pages.load_editProf = async () => {
       incognito: editProfIncognito.value,
     };
 
-    console.log(postData);
-
     // -- API Section
     const editProf_url = `${dating_pages.baseURL}/editProfile`;
     const response_login = await dating_pages.postAPI(editProf_url, postData);
     dating_pages.Console("Testing login API", response_login);
-
-    debugger;
   });
 };
