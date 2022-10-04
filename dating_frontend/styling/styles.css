@@ -122,6 +122,12 @@ footer h3 {
   color: #544f4d;
 }
 
+#locationDetector {
+  height: fit-content;
+  margin: 0px;
+  cursor: pointer;
+}
+
 #signInForm,
 #signUpForm {
   display: none;
@@ -351,6 +357,11 @@ footer h3 {
   color: #544f4d;
 }
 
+#editProfProfImg {
+  min-height: 200px;
+  max-height: 300px;
+}
+
 #editProfInputs {
   min-width: 400px;
   width: 90%;
@@ -363,10 +374,6 @@ footer h3 {
   width: 100%;
   gap: 20px;
   align-items: center;
-}
-
-#locationDetector {
-  margin: 50px 10px;
 }
 
 #editProfSubmit {

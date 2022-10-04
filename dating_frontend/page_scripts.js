@@ -72,6 +72,50 @@ dating_pages.loadFor = (page) => {
   eval("dating_pages.load_" + page + "();");
 };
 
+const locationUpdater = async () => {
+  const locationDetector = document.getElementById("locationDetector");
+
+  locationDetector.addEventListener(
+    "click",
+    () => {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+
+      const success = async (pos) => {
+        let crd = pos.coords;
+        let lat = crd.latitude.toString();
+        let lng = crd.longitude.toString();
+        coordinates.push(lat);
+        coordinates.push(lng);
+
+        let postData = {
+          location: coordinates,
+        };
+
+        console.log(postData);
+
+        // -- API Section
+        const editLocation_url = `${dating_pages.baseURL}/editProfile`;
+        const response_location = await dating_pages.postAPI(
+          editLocation_url,
+          postData
+        );
+        dating_pages.Console("Testing Location API", response_location);
+      };
+
+      function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      }
+
+      navigator.geolocation.getCurrentPosition(success, error, options);
+    },
+    { once: true }
+  );
+};
+
 dating_pages.load_login = async () => {
   const formCloser = document.querySelectorAll(".close-form p");
   const signInBtn = document.getElementById("signIn");
@@ -153,6 +197,9 @@ dating_pages.load_login = async () => {
 };
 
 dating_pages.load_landing = async () => {
+  // This function is called so that whenever user clicks on update location btn, location is updated
+  locationUpdater();
+
   const options = {
     enableHighAccuracy: true,
     timeout: 5000,
@@ -216,14 +263,18 @@ dating_pages.load_landing = async () => {
     }
 
     jsonLink.forEach((user) => {
+      // user.location = user.location.replaceAll(`"`, "");
+      // user.location = user.location.replaceAll(`[`, "");
+      // user.location = user.location.replaceAll(`]`, "");
+      user.location = user.location.replace(/[\[\]"]+/g, ""); // Proof there's always a better way
       users.push({
         ...user,
         // Add distance from current user to each user object
         distance: calcCrow(
           user.location.split(",")[0],
           user.location.split(",")[1],
-          coordinates[0],
-          coordinates[1]
+          parseFloat(coordinates[0]),
+          parseFloat(coordinates[1])
         ).toFixed(2),
       });
     });
@@ -234,7 +285,7 @@ dating_pages.load_landing = async () => {
     users.forEach((user) => {
       parentDiv.innerHTML += userCardCaller(
         user.id,
-        "./assets/default.jpg", // *.*.*.* ASK QUESTIONS HERE *.*.*.*
+        user.image, // *.*.*.* ASK QUESTIONS HERE *.*.*.*
         user.name,
         year - user.dob.substring(0, 4),
         user.distance
@@ -244,37 +295,20 @@ dating_pages.load_landing = async () => {
 };
 
 dating_pages.load_editProf = async () => {
-  const locationDetector = document.getElementById("locationDetector");
+  // This function is called so that whenever user clicks on update location btn, location is updated
+  locationUpdater();
 
-  locationDetector.addEventListener(
-    "click",
-    () => {
-      const options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0,
-      };
+  // -- API Section
+  const retrieveImage_url = `${dating_pages.baseURL}/editProfile`;
+  const response_retrieveImage = await dating_pages.postAPI(retrieveImage_url);
+  dating_pages.Console("Testing Retrieve Image API", "Base 64 Here");
 
-      function success(pos) {
-        let crd = pos.coords;
-        let lat = crd.latitude.toString();
-        let lng = crd.longitude.toString();
-        coordinates.push(lat);
-        coordinates.push(lng);
-        console.log(coordinates);
-      }
+  let base64Image = response_retrieveImage.data.data.image;
 
-      function error(err) {
-        console.warn(`ERROR(${err.code}): ${err.message}`);
-      }
-
-      navigator.geolocation.getCurrentPosition(success, error, options);
-    },
-    { once: true }
-  );
+  const editProfProfImg = document.getElementById("editProfProfImg");
+  editProfProfImg.src = `data:image/jpeg;base64,` + base64Image;
 
   const imageChecker = document.getElementById("editProfImage");
-  let base64Image = "";
 
   imageChecker.addEventListener("change", () => {
     imageUploaded();
@@ -317,7 +351,6 @@ dating_pages.load_editProf = async () => {
       image: base64Image,
       dob: editProfDOB.value,
       password: editProfPassword.value,
-      location: `${coordinates[0]},${coordinates[1]}`,
       gender: editProfGender.value,
       gender_preference: editProfGenderPref.value,
       interests: editProfInterests.value,
@@ -328,10 +361,9 @@ dating_pages.load_editProf = async () => {
     console.log(postData);
 
     // -- API Section
-    // const editProf_url = `${dating_pages.baseURL}/editProfile`;
-    // event.preventDefault();
-    // const response_login = await dating_pages.postAPI(editProf_url, postData);
-    // dating_pages.Console("Testing login API", response_login);
+    const editProf_url = `${dating_pages.baseURL}/editProfile`;
+    const response_login = await dating_pages.postAPI(editProf_url, postData);
+    dating_pages.Console("Testing login API", response_login);
 
     debugger;
   });

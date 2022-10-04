@@ -112,7 +112,7 @@ class UserController extends Controller
             $user->incognito = $request['incognito'];
         }
 
-        // $user->save();
+        $user->save();
 
         return response()->json([
             'status' => 'success',
