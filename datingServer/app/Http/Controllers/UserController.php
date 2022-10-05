@@ -46,6 +46,38 @@ class UserController extends Controller
         ]);
     }
 
+    public function blockUser(Request $request)
+    {
+        $currUserID = Auth::id();
+
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        $blockID = $request->only('id');
+
+        $values = array('user1_id' => $currUserID, 'user2_id' => $blockID['id']);
+
+        $query = DB::table('blocks')->where([
+            ['user1_id', '=', $currUserID],
+            ['user2_id', '=', $blockID['id']]
+        ])->get();
+
+        if (count($query) > 0) {
+            return response()->json([
+                'status' => 'No Edits',
+                "data" => count($query)
+            ]);
+        }
+
+        $query = DB::table('blocks')->insert($values);
+
+        return response()->json([
+            'status' => 'success',
+            "data" => $query
+        ]);
+    }
+
     public function removeFavorite(Request $request)
     {
         $currUserID = Auth::id();
@@ -146,8 +178,11 @@ class UserController extends Controller
 
         $data = User::all()->where('incognito', '=', '0')->where('gender', '=', $user->gender_preference)->except(Auth::id());
 
+        $query = DB::table('blocks')->get();
+
         return response()->json([
             'status' => 'success',
+            'queryTest ' => $query,
             'curr ' => $user->gender_preference,
             "data" => $data
         ]);
