@@ -324,16 +324,25 @@ dating_pages.load_landing = async () => {
     let jsonLink = response.data.data;
     let blockCount = response.data.blocks + 2;
 
-    console.log("TEST ", blockCount);
-
     if (!jsonLink) {
       jsonLink = response.data.users;
-      console.log("TEST IF ", jsonLink);
+      jsonLink.forEach((user) => {
+        user.location = user.location.replace(/[\[\]"]+/g, ""); // Proof there's always a better way
+        users.push({
+          ...user,
+          // Add distance from current user to each user object
+          distance: calcCrow(
+            user.location.split(",")[0],
+            user.location.split(",")[1],
+            userCoordinates.split(",")[0],
+            userCoordinates.split(",")[1]
+          ).toFixed(2),
+        });
+      });
     }
 
     for (let x = 0; x < Object.keys(jsonLink).length + blockCount; x++) {
       if (jsonLink[x]) {
-        console.log("user: ", Object.keys(jsonLink).length + blockCount);
         jsonLink[x].location = jsonLink[x].location.replace(/[\[\]"]+/g, ""); // Proof there's always a better way
         users.push({
           ...jsonLink[x],
@@ -505,4 +514,73 @@ dating_pages.load_editProf = async () => {
   });
 };
 
-dating_pages.load_chat = async () => {};
+dating_pages.load_chat = async () => {
+  // Display Favorites Below
+  const chatUsersList = document.getElementById("chat-users");
+
+  const chatUserCardCaller = (favImage, favName) => {
+    const userCard = `<div class="flex chat-user-card">
+                        <img src="${favImage}" />
+                        <div class="flex-col">
+                          <p>${favName}</p>
+                        </div>
+                      </div>`;
+
+    chatUsersList.innerHTML += userCard;
+  };
+
+  // -- API here
+  const favoritesCaller = `${dating_pages.baseURL}/favorites`;
+  const response = await dating_pages.postAPI(favoritesCaller);
+  dating_pages.Console(`Testing favorites API`, response);
+
+  let retrievedUsers = response.data.users;
+
+  retrievedUsers.forEach((user) => {
+    if (user.image != "./assets/default.jpg") {
+      user.image = "data:image/jpeg;base64," + user.image;
+    }
+    chatUserCardCaller(user.image, user.name);
+  });
+
+  // -- Clickable Users Below
+  const favoriteUsers = document.querySelectorAll(".chat-user-card");
+  const currentUserCardImage = document.querySelector("#current-user-card img");
+  const currentUserCardName = document.querySelector("#current-user-card p");
+
+  currentUserCardImage.src = retrievedUsers[0].image;
+  currentUserCardName.innerHTML = retrievedUsers[0].name;
+
+  favoriteUsers.forEach((favUser, index) => {
+    favUser.addEventListener("click", () => {
+      currentUserCardImage.src = retrievedUsers[index].image;
+      currentUserCardName.innerHTML = retrievedUsers[index].name;
+    });
+  });
+
+  // ADDING MESSAGE BELOW
+
+  const messagesList = document.getElementById("messages-list");
+
+  const messageSendCaller = (senderImage, senderUsername, senderMessage) => {
+    const message = `<div class="flex msg sent-msg">
+                      <img src="${senderImage}" />
+                      <div class="flex-col">
+                        <p>${senderUsername}</p>
+                        <p>${senderMessage}</p>
+                      </div>
+                    </div>`;
+
+    messagesList.innerHTML += message;
+  };
+
+  let msgContent = document.getElementById("msgContent");
+
+  const msgSender = document.getElementById("msgSender");
+
+  msgSender.addEventListener("click", () => {
+    console.log(msgContent.value);
+    messageSendCaller("./assets/default.jpg", "zing", msgContent.value);
+    msgContent.value = "";
+  });
+};

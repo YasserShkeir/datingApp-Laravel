@@ -32,21 +32,12 @@
     <section class="flex-col" id="chat-section">
       <h1>Chat with Liked Users:</h1>
       <div class="flex" id="chat-section-container">
-        <div class="flex-col" id="chat-users">
-          <div class="flex chat-user-card">
-            <img src="./assets/default.jpg" />
-            <div class="flex-col">
-              <p>User Name</p>
-              <p>Meow</p>
-            </div>
-          </div>
-        </div>
+        <div class="flex-col" id="chat-users"></div>
         <div class="flex-col" id="chat-user-messages">
           <div class="flex" id="current-user-card">
-            <img src="./assets/default.jpg" />
+            <img src="" />
             <div class="flex-col">
-              <p>User Name</p>
-              <p>Meow</p>
+              <p></p>
             </div>
           </div>
           <div class="flex-col" id="messages-list">
@@ -71,13 +62,7 @@
                 <p>Pizza?</p>
               </div>
             </div>
-            <div class="flex msg sent-msg">
-              <img src="./assets/default.jpg" />
-              <div class="flex-col">
-                <p>Name Here</p>
-                <p>k</p>
-              </div>
-            </div>
+
             <div class="flex msg received-msg">
               <img src="./assets/default.jpg" />
               <div class="flex-col">
@@ -93,8 +78,9 @@
               </div>
             </div>
           </div>
-          <div class="flex" id="message-input">
-            <input type="text" />
+          <div class="flex form-row" id="message-input">
+            <input type="text" id="msgContent" />
+            <button class="btn-hollow" id="msgSender">Send</button>
           </div>
         </div>
       </div>

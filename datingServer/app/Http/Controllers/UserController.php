@@ -11,6 +11,22 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function getUsers()
+    {
+        $user = Auth::user();
+
+        // $data = User::all()->where('incognito', '=', '0')->where('gender', '=', $user->gender_preference)->except(Auth::id());
+
+        $data = DB::table('users')->leftJoin('blocks', 'users.id', '=', 'blocks.user2_id')->get()->where('user2_id', '=', '')->where('id', '!=', $user->id)->where('gender', '=', $user->gender_preference);
+        $blocks = DB::table('blocks')->where('user1_id', '=', $user->id)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data,
+            'blocks' => count($blocks)
+        ]);
+    }
+
     public function addFavorite(Request $request)
     {
         $currUserID = Auth::id();
@@ -172,19 +188,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function getUsers()
-    {
-        $user = Auth::user();
+    public function getMessages(Request $request)
+    { }
 
-        // $data = User::all()->where('incognito', '=', '0')->where('gender', '=', $user->gender_preference)->except(Auth::id());
-
-        $data = DB::table('users')->leftJoin('blocks', 'users.id', '=', 'blocks.user2_id')->get()->where('user2_id', '=', '')->where('id', '!=', $user->id)->where('gender', '=', $user->gender_preference);
-        $blocks = DB::table('blocks')->where('user1_id', '=', $user->id)->get();
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $data,
-            'blocks' => count($blocks)
-        ]);
-    }
+    public function sendMessage(Request $request)
+    { }
 }

@@ -405,6 +405,7 @@ footer h3 {
   gap: 10px;
   background-color: #d7d732;
   box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .chat-user-card {
@@ -416,6 +417,7 @@ footer h3 {
   align-items: center;
   padding: 5px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .chat-user-card img {
@@ -451,7 +453,7 @@ footer h3 {
 
 .msg {
   min-height: fit-content;
-  width: 40%;
+  width: 45%;
   gap: 10px;
   margin: 5px 0px;
   padding: 10px 20px;
@@ -481,6 +483,7 @@ footer h3 {
 }
 
 #message-input {
+  width: 100%;
   box-sizing: border-box;
   position: relative;
   background-color: #ef5241;
@@ -488,11 +491,22 @@ footer h3 {
   bottom: 0;
   border: 2px solid #d7d732;
   margin-top: auto;
+  gap: 10px;
+}
+
+#chat-user-messages .form-row {
+  margin: 0px !important;
 }
 
 #message-input input {
   margin: 0px;
   box-sizing: border-box;
+  flex-grow: 1;
+}
+
+#message-input button {
+  color: #fff;
+  font-weight: 600;
 }
 
 @media only screen and (max-width: 600px) {
@@ -507,6 +521,10 @@ footer h3 {
 
   #editProfInputs {
     flex-direction: column;
+  }
+
+  .msg {
+    width: 85%;
   }
 }
 
