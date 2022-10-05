@@ -216,10 +216,13 @@ dating_pages.load_login = async () => {
       dob: dateOfBirth.value,
       password: signUpPass.value,
       location: locationUpd,
-      gender: gender,
+      gender: gender.value,
       gender_preference: selectedGender.value,
       interests: interests,
     };
+
+    console.log(postData);
+
     // -- API Section
     event.preventDefault();
     const signup_url = `${dating_pages.baseURL}/register`;
@@ -319,28 +322,31 @@ dating_pages.load_landing = async () => {
     const users = [];
 
     let jsonLink = response.data.data;
+    let blockCount = response.data.blocks + 1;
+
+    console.log("TEST ", blockCount);
 
     if (!jsonLink) {
       jsonLink = response.data.users;
+      console.log("TEST IF ", jsonLink);
     }
 
-    jsonLink.forEach((user) => {
-      console.log("user: ", user);
-      // user.location = user.location.replaceAll(`"`, "");
-      // user.location = user.location.replaceAll(`[`, "");
-      // user.location = user.location.replaceAll(`]`, "");
-      user.location = user.location.replace(/[\[\]"]+/g, ""); // Proof there's always a better way
-      users.push({
-        ...user,
-        // Add distance from current user to each user object
-        distance: calcCrow(
-          user.location.split(",")[0],
-          user.location.split(",")[1],
-          userCoordinates.split(",")[0],
-          userCoordinates.split(",")[1]
-        ).toFixed(2),
-      });
-    });
+    for (let x = 0; x < Object.keys(jsonLink).length + blockCount; x++) {
+      if (jsonLink[x]) {
+        console.log("user: ", jsonLink[x].location);
+        jsonLink[x].location = jsonLink[x].location.replace(/[\[\]"]+/g, ""); // Proof there's always a better way
+        users.push({
+          ...jsonLink[x],
+          // Add distance from current user to each user object
+          distance: calcCrow(
+            jsonLink[x].location.split(",")[0],
+            jsonLink[x].location.split(",")[1],
+            userCoordinates.split(",")[0],
+            userCoordinates.split(",")[1]
+          ).toFixed(2),
+        });
+      }
+    }
 
     users.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
 
@@ -365,8 +371,6 @@ dating_pages.load_landing = async () => {
       "#landing-content-closest .user-card-controls-heart"
     );
 
-    console.log("usersLikeButton: ", usersLikeButton);
-
     usersLikeButton.forEach((likeButton, index) => {
       likeButton.addEventListener("click", async () => {
         const postData = {
@@ -383,8 +387,6 @@ dating_pages.load_landing = async () => {
     const usersUnLikeButton = document.querySelectorAll(
       "#landing-content-favorites .user-card-controls-heart"
     );
-
-    console.log("usersUnLikeButton: ", usersUnLikeButton);
 
     usersUnLikeButton.forEach((likeButton, index) => {
       likeButton.innerHTML = "Remove";
@@ -405,8 +407,6 @@ dating_pages.load_landing = async () => {
       ".user-card-controls-block"
     );
 
-    console.log("usersBlockButton: ", usersBlockButton);
-
     usersBlockButton.forEach((blockButton, index) => {
       blockButton.addEventListener("click", async () => {
         const postData = {
@@ -417,7 +417,9 @@ dating_pages.load_landing = async () => {
         const blockCaller = `${dating_pages.baseURL}/blockUser`;
         const response = await dating_pages.postAPI(blockCaller, postData);
         dating_pages.Console(`Testing addFavCaller API`, response);
-        alert("User Blocked");
+        if (response) {
+          alert("User Blocked");
+        }
       });
     });
   };
@@ -498,3 +500,5 @@ dating_pages.load_editProf = async () => {
     dating_pages.Console("Testing login API", response_login);
   });
 };
+
+dating_pages.load_chat = async () => {};

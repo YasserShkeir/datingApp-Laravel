@@ -50,6 +50,7 @@ class AuthController extends Controller
             'dob' => 'required|string',
             'password' => 'required|string',
             'location' => 'required|string',
+            'gender' => 'required',
             'gender_preference' => 'required',
             'interests' => 'required|string',
         ]);
@@ -60,6 +61,7 @@ class AuthController extends Controller
             'dob' => $request->dob,
             'password' => Hash::make($request->password),
             'location' => $request->location,
+            'gender' => $request->gender,
             'gender_preference' => $request->gender_preference,
             'interests' => $request->interests,
         ]);

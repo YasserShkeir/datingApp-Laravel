@@ -383,7 +383,42 @@ footer h3 {
   margin: 40px 50px;
 }
 
-/* Favorites */
+/* Chat Page */
+
+#chat-section {
+  height: calc(100vh - 150px);
+  padding: 2% 6%;
+  box-sizing: border-box;
+}
+
+#chat-section-container {
+  height: 100%;
+  background-color: #544f4d;
+}
+
+#chat-users {
+  width: 220px;
+  height: 100%;
+  padding: 10px;
+  gap: 10px;
+  background-color: #d7d732;
+  box-sizing: border-box;
+}
+
+.chat-user-card {
+  width: 100%;
+  min-height: 80px;
+  height: fit-content;
+  background-color: #fff;
+  gap: 10px;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.chat-user-card img {
+  max-height: 80px;
+}
 
 @media only screen and (max-width: 600px) {
   nav img {

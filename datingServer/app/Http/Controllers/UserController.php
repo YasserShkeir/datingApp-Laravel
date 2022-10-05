@@ -176,15 +176,15 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $data = User::all()->where('incognito', '=', '0')->where('gender', '=', $user->gender_preference)->except(Auth::id());
+        // $data = User::all()->where('incognito', '=', '0')->where('gender', '=', $user->gender_preference)->except(Auth::id());
 
-        $query = DB::table('blocks')->get();
+        $data = DB::table('users')->leftJoin('blocks', 'users.id', '=', 'blocks.user2_id')->get()->where('user2_id', '=', '')->where('id', '!=', $user->id);
+        $blocks = DB::table('blocks')->where('user1_id', '=', $user->id)->get();
 
         return response()->json([
             'status' => 'success',
-            'queryTest ' => $query,
-            'curr ' => $user->gender_preference,
-            "data" => $data
+            'data' => $data,
+            'blocks' => count($blocks)
         ]);
     }
 }
