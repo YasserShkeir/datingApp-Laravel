@@ -548,13 +548,51 @@ dating_pages.load_chat = async () => {
   const currentUserCardImage = document.querySelector("#current-user-card img");
   const currentUserCardName = document.querySelector("#current-user-card p");
 
-  currentUserCardImage.src = retrievedUsers[0].image;
-  currentUserCardName.innerHTML = retrievedUsers[0].name;
+  const messageWindowCaller = async (index) => {
+    currentUserCardImage.src = retrievedUsers[index].image;
+    currentUserCardName.innerHTML = retrievedUsers[index].name;
+
+    //Retrieve Message Below
+
+    let currUserID = retrievedUsers[index].id;
+
+    let postData = {
+      id: currUserID,
+    };
+
+    // -- API here
+    const messagesCaller = `${dating_pages.baseURL}/getMessages`;
+    const messagesResponse = await dating_pages.postAPI(
+      messagesCaller,
+      postData
+    );
+    dating_pages.Console(`Testing getMessages API`, messagesResponse);
+
+    console.log("MESSAGES", messagesResponse.data.users);
+    messagesResponse.data.users.forEach((message) => {
+      if (message.id != currUserID) {
+        messageSendCaller(message.image, message.name, message.message, "sent");
+      } else {
+        messageSendCaller(
+          message.image,
+          message.name,
+          message.message,
+          "received"
+        );
+      }
+    });
+  };
+
+  messageWindowCaller(0);
+
+  let globalIndex = 0;
 
   favoriteUsers.forEach((favUser, index) => {
     favUser.addEventListener("click", () => {
-      currentUserCardImage.src = retrievedUsers[index].image;
-      currentUserCardName.innerHTML = retrievedUsers[index].name;
+      messagesList.innerHTML = "";
+      globalIndex = index;
+      chatController();
+      messageWindowCaller(index);
     });
   });
 
@@ -562,8 +600,13 @@ dating_pages.load_chat = async () => {
 
   const messagesList = document.getElementById("messages-list");
 
-  const messageSendCaller = (senderImage, senderUsername, senderMessage) => {
-    const message = `<div class="flex msg sent-msg">
+  const messageSendCaller = (
+    senderImage,
+    senderUsername,
+    senderMessage,
+    type
+  ) => {
+    const message = `<div class="flex msg ${type}-msg">
                       <img src="${senderImage}" />
                       <div class="flex-col">
                         <p>${senderUsername}</p>
@@ -574,13 +617,22 @@ dating_pages.load_chat = async () => {
     messagesList.innerHTML += message;
   };
 
-  let msgContent = document.getElementById("msgContent");
+  const chatController = () => {
+    console.log("RESP", retrievedUsers[globalIndex].id);
 
-  const msgSender = document.getElementById("msgSender");
+    let msgContent = document.getElementById("msgContent");
 
-  msgSender.addEventListener("click", () => {
-    console.log(msgContent.value);
-    messageSendCaller("./assets/default.jpg", "zing", msgContent.value);
-    msgContent.value = "";
-  });
+    const msgSender = document.getElementById("msgSender");
+
+    msgSender.addEventListener("click", () => {
+      console.log(msgContent.value);
+      messageSendCaller(
+        "./assets/default.jpg",
+        "zing",
+        msgContent.value,
+        "sent"
+      );
+      msgContent.value = "";
+    });
+  };
 };

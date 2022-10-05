@@ -189,7 +189,28 @@ class UserController extends Controller
     }
 
     public function getMessages(Request $request)
-    { }
+    {
+        $receiverID = $request['id'];
+
+        // if receiver is REC and send is CURR - OR - receiver is CURR and send is REC
+        $users = User::join('messages', 'users.id', '=', 'messages.sender_id')->where([['messages.sender_id', '=', Auth::id()], ['messages.receiver_id', '=', $receiverID]])->orWhere([['messages.sender_id', '=', $receiverID], ['messages.receiver_id', '=', Auth::id()]])->get();
+
+        if (Auth::id()) {
+            if (!$users) {
+                $users = "No Messages yet!";
+            }
+
+            return response()->json([
+                'status' => 'Retrieved Messages',
+                "users" => $users
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'Not Authorized',
+            "message" => 'Please login to Send Messages'
+        ]);
+    }
 
     public function sendMessage(Request $request)
     { }

@@ -19,4 +19,6 @@ Route::group(["middleware" => "auth:api"], function () {
     Route::post('removeFavorite', [UserController::class, 'removeFavorite']);
     Route::post('blockUser', [UserController::class, 'blockUser']);
     Route::post('editProfile', [UserController::class, 'editProfile']);
+    Route::post('getMessages', [UserController::class, 'getMessages']);
+    Route::post('sendMessage', [UserController::class, 'sendMessage']);
 });
