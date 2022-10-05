@@ -75,13 +75,11 @@
         <div class="flex-col form-row">
           <div class="flex form-row-double">
             <div class="flex-col form-row">
-              <label>Date of Birth</label>
-              <input
-                id="dob"
-                type="date"
-                placeholder="Date of Birth"
-                required
-              />
+              <label>Your Gender</label>
+              <select id="gender">
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+              </select>
             </div>
 
             <div class="flex-col form-row">
@@ -93,6 +91,31 @@
             </div>
           </div>
         </div>
+        <div class="flex-col form-row">
+          <div class="flex form-row-double">
+            <div class="flex-col form-row">
+              <label>Date of Birth</label>
+              <input
+                id="dob"
+                type="date"
+                placeholder="Date of Birth"
+                required
+              />
+            </div>
+
+            <div class="flex-col form-row">
+              <label>Location:</label>
+              <button
+                class="btn"
+                id="locationDetectorSignUp"
+                style="font-size: 12px"
+              >
+                Detect Location
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="flex-col form-row">
           <label>Password</label>
           <input

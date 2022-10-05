@@ -167,6 +167,38 @@ dating_pages.load_login = async () => {
     }
   });
 
+  // -- -- -- Location Saver SignUp
+  const locationDetectorSignUp = document.getElementById(
+    "locationDetectorSignUp"
+  );
+
+  locationDetectorSignUp.addEventListener(
+    "click",
+    () => {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+
+      const success = async (pos) => {
+        let crd = pos.coords;
+        let lat = crd.latitude.toString();
+        let lng = crd.longitude.toString();
+        coordinates[0] = lat;
+        coordinates[1] = lng;
+        console.log(coordinates);
+      };
+
+      function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      }
+
+      navigator.geolocation.getCurrentPosition(success, error, options);
+    },
+    { once: true }
+  );
+
   // -- -- Sign Up
   signUpSubmit.addEventListener("click", async (event) => {
     const signUpName = document.getElementById("signUpName");
