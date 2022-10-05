@@ -212,6 +212,7 @@ dating_pages.load_login = async () => {
     const postData = {
       name: signUpName.value,
       email: signUpEmail.value,
+      image: "./assets/default.jpg",
       dob: dateOfBirth.value,
       password: signUpPass.value,
       location: locationUpd,
@@ -284,7 +285,7 @@ dating_pages.load_landing = async () => {
     distance
   ) => {
     const card = `<div class="flex-col user-card" style="order: index">
-                    <img src="data:image/jpeg;base64,${imageSrc}" />
+                    <img src="${imageSrc}" />
                     <div class="user-card-name">${userName}</div>
                     <div class="user-card-age">Age: ${age}</div>
                     <div class="user-card-interests">Interests: ${interests}</div>
@@ -345,9 +346,13 @@ dating_pages.load_landing = async () => {
 
     // Loop through Users and add them on the frontend
     users.forEach((user) => {
+      let displayImage = user.image;
+      if (displayImage != "./assets/default.jpg") {
+        displayImage = "data:image/jpeg;base64," + user.image;
+      }
       parentDiv.innerHTML += userCardCaller(
         user.id,
-        user.image, // *.*.*.* ASK QUESTIONS HERE *.*.*.*
+        displayImage, // *.*.*.* ASK QUESTIONS HERE *.*.*.*
         user.name,
         year - user.dob.substring(0, 4),
         user.interests,
