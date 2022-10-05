@@ -205,7 +205,7 @@ dating_pages.load_login = async () => {
     const signUpEmail = document.getElementById("signUpEmail");
     const dateOfBirth = document.getElementById("dob");
     const signUpPass = document.getElementById("signUpPass");
-    const location = `${coordinates[0]},${coordinates[1]}`;
+    const locationUpd = `${coordinates[0]},${coordinates[1]}`;
     const gender = document.getElementById("gender"); // 0 male; 1 female
     const selectedGender = document.getElementById("selectedGender"); // 0 male; 1 female
     const interests = "Edit Interests";
@@ -214,7 +214,7 @@ dating_pages.load_login = async () => {
       email: signUpEmail.value,
       dob: dateOfBirth.value,
       password: signUpPass.value,
-      location: location,
+      location: locationUpd,
       gender: gender,
       gender_preference: selectedGender.value,
       interests: interests,
@@ -225,7 +225,7 @@ dating_pages.load_login = async () => {
     const response_signup = await dating_pages.postAPI(signup_url, postData);
     dating_pages.Console("Testing login API", response_signup);
     if (response_signup) {
-      window.open("./landingpage.html");
+      location.reload();
     } else {
       alert("Please use a different email");
     }

@@ -95,19 +95,6 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-        // function attributeRunner($request, $user, $attribute)
-        // {
-        //     if ($request[`$attribute`]) {
-        //         $user->$attribute = $request[`$attribute`];
-        //         return $user->$attribute;
-        //     }
-        // }
-
-        // foreach ($request->except(['password']) as $attribute) {
-        //     echo $attribute;
-        //     print_r(attributeRunner($request, $user, $attribute));
-        // }
-
         if ($request['name']) {
             $user->name = $request['name'];
         }
@@ -156,7 +143,7 @@ class UserController extends Controller
     public function getUsers()
     {
 
-        $data = User::all()->except(Auth::id());
+        $data = User::all()->where('incognito', '=', '0')->except(Auth::id());
 
         return response()->json([
             'status' => 'success',

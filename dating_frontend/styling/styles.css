@@ -300,7 +300,8 @@ footer h3 {
 
 .user-card img {
   max-width: 200px;
-  margin-bottom: 5px;
+  width: 90%;
+  margin-bottom: auto;
 }
 
 .user-card-name,
