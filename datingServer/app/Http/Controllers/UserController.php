@@ -142,11 +142,13 @@ class UserController extends Controller
 
     public function getUsers()
     {
+        $user = Auth::user();
 
-        $data = User::all()->where('incognito', '=', '0')->except(Auth::id());
+        $data = User::all()->where('incognito', '=', '0')->where('gender', '=', $user->gender_preference)->except(Auth::id());
 
         return response()->json([
             'status' => 'success',
+            'curr ' => $user->gender_preference,
             "data" => $data
         ]);
     }
