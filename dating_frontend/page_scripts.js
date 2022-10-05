@@ -395,6 +395,26 @@ dating_pages.load_landing = async () => {
         location.reload();
       });
     });
+
+    const usersBlockButton = document.querySelectorAll(
+      ".user-card-controls-block"
+    );
+
+    console.log("usersBlockButton: ", usersBlockButton);
+
+    usersBlockButton.forEach((blockButton, index) => {
+      blockButton.addEventListener("click", async () => {
+        const postData = {
+          id: users[index].id,
+        };
+
+        // API magic happens here
+        const blockCaller = `${dating_pages.baseURL}/blockUser`;
+        const response = await dating_pages.postAPI(blockCaller, postData);
+        dating_pages.Console(`Testing addFavCaller API`, response);
+        alert("User Blocked");
+      });
+    });
   };
 };
 
@@ -464,6 +484,8 @@ dating_pages.load_editProf = async () => {
       bio: editProfBio.value,
       incognito: editProfIncognito.value,
     };
+
+    console.log(postData);
 
     // -- API Section
     const editProf_url = `${dating_pages.baseURL}/editProfile`;
