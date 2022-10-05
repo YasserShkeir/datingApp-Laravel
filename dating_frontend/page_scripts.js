@@ -205,17 +205,6 @@ dating_pages.load_landing = async () => {
   // This function is called so that whenever user clicks on update location btn, location is updated
   locationUpdater();
 
-  // Check Fav if empty and fill it with something
-  let text = document.querySelector(
-    "#landing-content-favorites .user-cards"
-  ).innerHTML;
-  console.log(text);
-  if (!text) {
-    document.querySelector(
-      "#landing-content-favorites .user-cards"
-    ).innerHTML += "<h3>No Favorites Yet...</h3>";
-  }
-
   // -- API Section
   const retrieveCoords_url = `${dating_pages.baseURL}/editProfile`;
   const response_retrieveCoords = await dating_pages.postAPI(
@@ -331,6 +320,24 @@ dating_pages.load_landing = async () => {
         user.bio,
         user.distance
       );
+    });
+
+    const usersLikeButton = document.querySelectorAll(
+      ".user-card-controls-heart"
+    );
+
+    console.log("usersLikeButton: ", usersLikeButton);
+
+    usersLikeButton.forEach((likeButton, index) => {
+      likeButton.addEventListener("click", async () => {
+        const postData = {
+          id: users[index].id,
+        };
+        // API magic happens here
+        const addFavCaller = `${dating_pages.baseURL}/addFavorite`;
+        const response = await dating_pages.postAPI(addFavCaller, postData);
+        dating_pages.Console(`Testing addFavCaller API`, response);
+      });
     });
   };
 };
