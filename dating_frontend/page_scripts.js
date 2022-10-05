@@ -174,6 +174,7 @@ dating_pages.load_login = async () => {
     const dateOfBirth = document.getElementById("dob");
     const signUpPass = document.getElementById("signUpPass");
     const location = `${coordinates[0]},${coordinates[1]}`;
+    const gender = document.getElementById("gender"); // 0 male; 1 female
     const selectedGender = document.getElementById("selectedGender"); // 0 male; 1 female
     const interests = "Edit Interests";
     const postData = {
@@ -182,6 +183,7 @@ dating_pages.load_login = async () => {
       dob: dateOfBirth.value,
       password: signUpPass.value,
       location: location,
+      gender: gender,
       gender_preference: selectedGender.value,
       interests: interests,
     };
@@ -191,7 +193,7 @@ dating_pages.load_login = async () => {
     const response_signup = await dating_pages.postAPI(signup_url, postData);
     dating_pages.Console("Testing login API", response_signup);
     if (response_signup) {
-      alert("Successfully signed up");
+      window.open("./landingpage.html");
     } else {
       alert("Please use a different email");
     }
@@ -323,7 +325,7 @@ dating_pages.load_landing = async () => {
     });
 
     const usersLikeButton = document.querySelectorAll(
-      ".user-card-controls-heart"
+      "#landing-content-closest .user-card-controls-heart"
     );
 
     console.log("usersLikeButton: ", usersLikeButton);
@@ -337,6 +339,28 @@ dating_pages.load_landing = async () => {
         const addFavCaller = `${dating_pages.baseURL}/addFavorite`;
         const response = await dating_pages.postAPI(addFavCaller, postData);
         dating_pages.Console(`Testing addFavCaller API`, response);
+        location.reload();
+      });
+    });
+
+    const usersUnLikeButton = document.querySelectorAll(
+      "#landing-content-favorites .user-card-controls-heart"
+    );
+
+    console.log("usersUnLikeButton: ", usersUnLikeButton);
+
+    usersUnLikeButton.forEach((likeButton, index) => {
+      likeButton.innerHTML = "Remove";
+      likeButton.title = "Remove from Favorites";
+      likeButton.addEventListener("click", async () => {
+        const postData = {
+          id: users[index].id,
+        };
+        // API magic happens here
+        const removeFavCaller = `${dating_pages.baseURL}/removeFavorite`;
+        const response = await dating_pages.postAPI(removeFavCaller, postData);
+        dating_pages.Console(`Testing removeFavCaller API`, response);
+        location.reload();
       });
     });
   };

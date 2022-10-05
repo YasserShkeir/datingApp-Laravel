@@ -46,6 +46,27 @@ class UserController extends Controller
         ]);
     }
 
+    public function removeFavorite(Request $request)
+    {
+        $currUserID = Auth::id();
+
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        $favID = $request->only('id');
+
+        $query = DB::table('favorites')->where([
+            ['user1_id', '=', $currUserID],
+            ['user2_id', '=', $favID['id']]
+        ])->delete();
+
+        return response()->json([
+            'status' => 'success',
+            "data" => $query
+        ]);
+    }
+
     public function getFavorites()
     {
         $users = User::join('favorites', 'users.id', '=', 'favorites.user2_id')->where('favorites.user1_id', '=', Auth::id())->get();
