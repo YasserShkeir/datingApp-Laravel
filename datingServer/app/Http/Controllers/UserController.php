@@ -178,7 +178,7 @@ class UserController extends Controller
 
         // $data = User::all()->where('incognito', '=', '0')->where('gender', '=', $user->gender_preference)->except(Auth::id());
 
-        $data = DB::table('users')->leftJoin('blocks', 'users.id', '=', 'blocks.user2_id')->get()->where('user2_id', '=', '')->where('id', '!=', $user->id);
+        $data = DB::table('users')->leftJoin('blocks', 'users.id', '=', 'blocks.user2_id')->get()->where('user2_id', '=', '')->where('id', '!=', $user->id)->where('gender', '=', $user->gender_preference);
         $blocks = DB::table('blocks')->where('user1_id', '=', $user->id)->get();
 
         return response()->json([

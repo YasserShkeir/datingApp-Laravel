@@ -47,6 +47,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string',
+            'image' => 'required',
             'dob' => 'required|string',
             'password' => 'required|string',
             'location' => 'required|string',
@@ -58,6 +59,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'image' => $request->image,
             'dob' => $request->dob,
             'password' => Hash::make($request->password),
             'location' => $request->location,

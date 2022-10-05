@@ -322,7 +322,7 @@ dating_pages.load_landing = async () => {
     const users = [];
 
     let jsonLink = response.data.data;
-    let blockCount = response.data.blocks + 1;
+    let blockCount = response.data.blocks + 2;
 
     console.log("TEST ", blockCount);
 
@@ -333,7 +333,7 @@ dating_pages.load_landing = async () => {
 
     for (let x = 0; x < Object.keys(jsonLink).length + blockCount; x++) {
       if (jsonLink[x]) {
-        console.log("user: ", jsonLink[x].location);
+        console.log("user: ", Object.keys(jsonLink).length + blockCount);
         jsonLink[x].location = jsonLink[x].location.replace(/[\[\]"]+/g, ""); // Proof there's always a better way
         users.push({
           ...jsonLink[x],
@@ -440,7 +440,11 @@ dating_pages.load_editProf = async () => {
   let base64Image = response_retrieveImage.data.data.image;
 
   const editProfProfImg = document.getElementById("editProfProfImg");
-  editProfProfImg.src = `data:image/jpeg;base64,` + base64Image;
+  if (editProfProfImg.src == "") {
+    editProfProfImg.src = "./assets/default.jpg";
+  } else {
+    editProfProfImg.src = `data:image/jpeg;base64,` + base64Image;
+  }
 
   const imageChecker = document.getElementById("editProfImage");
 

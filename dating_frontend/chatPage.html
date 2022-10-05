@@ -1,0 +1,113 @@
+<html>
+  <head>
+    <title>Chat Section</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./assets/Dating Design.png" />
+    <link rel="stylesheet" href="./styling/styles.css" />
+  </head>
+
+  <body>
+    <!-- Navigation Bar not Logged In -->
+    <nav class="flex">
+      <a href="./landingPage.html"
+        ><img src="./assets/Dating Design Transparent.png"
+      /></a>
+      <div class="flex" id="nav-left">
+        <a href="./editProfile.html"
+          ><button class="navLink btn btn-hollow" id="editProfile">
+            Edit Profile
+          </button></a
+        >
+        <a href="./chatPage.html"
+          ><button class="navLink btn btn-hollow" id="chat">Chat</button>
+        </a>
+      </div>
+      <div class="flex" id="nav-right">
+        <button class="btn" id="locationDetector">Update Location</button>
+        <button class="navLink btn btn-filled" id="logout">Logout</button>
+      </div>
+    </nav>
+
+    <!-- Chat Page Content -->
+    <section class="flex-col" id="chat-section">
+      <h1>Chat with Liked Users:</h1>
+      <div class="flex" id="chat-section-container">
+        <div class="flex-col" id="chat-users">
+          <div class="flex chat-user-card">
+            <img src="./assets/default.jpg" />
+            <div class="flex-col">
+              <p>User Name</p>
+              <p>Meow</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex-col" id="chat-user-messages">
+          <div class="flex" id="current-user-card">
+            <img src="./assets/default.jpg" />
+            <div class="flex-col">
+              <p>User Name</p>
+              <p>Meow</p>
+            </div>
+          </div>
+          <div class="flex-col" id="messages-list">
+            <div class="flex msg received-msg">
+              <img src="./assets/default.jpg" />
+              <div class="flex-col">
+                <p>Name Here</p>
+                <p>Hello</p>
+              </div>
+            </div>
+            <div class="flex msg sent-msg">
+              <img src="./assets/default.jpg" />
+              <div class="flex-col">
+                <p>Name Here</p>
+                <p>Hi</p>
+              </div>
+            </div>
+            <div class="flex msg sent-msg">
+              <img src="./assets/default.jpg" />
+              <div class="flex-col">
+                <p>Name Here</p>
+                <p>Pizza?</p>
+              </div>
+            </div>
+            <div class="flex msg sent-msg">
+              <img src="./assets/default.jpg" />
+              <div class="flex-col">
+                <p>Name Here</p>
+                <p>k</p>
+              </div>
+            </div>
+            <div class="flex msg received-msg">
+              <img src="./assets/default.jpg" />
+              <div class="flex-col">
+                <p>Name Here</p>
+                <p>Nice</p>
+              </div>
+            </div>
+            <div class="flex msg received-msg">
+              <img src="./assets/default.jpg" />
+              <div class="flex-col">
+                <p>Name Here</p>
+                <p>Piiza</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex" id="message-input">
+            <input type="text" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORMS -->
+    <!-- LOGOUT FORM -->
+
+    <!-- JS Links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="./page_scripts.js"></script>
+    <script>
+      dating_pages.loadFor("chat");
+    </script>
+  </body>
+</html>

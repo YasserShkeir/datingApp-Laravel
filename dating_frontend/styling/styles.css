@@ -392,12 +392,14 @@ footer h3 {
 }
 
 #chat-section-container {
-  height: 100%;
+  height: 90%;
   background-color: #544f4d;
+  padding: 10px;
+  gap: 10px;
 }
 
 #chat-users {
-  width: 220px;
+  width: 250px;
   height: 100%;
   padding: 10px;
   gap: 10px;
@@ -418,6 +420,79 @@ footer h3 {
 
 .chat-user-card img {
   max-height: 80px;
+}
+
+#chat-user-messages {
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+}
+
+#current-user-card {
+  width: 100%;
+  background-color: rgb(84, 79, 77, 0.5);
+  padding: 5px;
+  box-sizing: border-box;
+  gap: 20px;
+}
+
+#current-user-card img {
+  max-height: 80px;
+  border-radius: 100px;
+}
+
+#messages-list {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.msg {
+  min-height: fit-content;
+  width: 40%;
+  gap: 10px;
+  margin: 5px 0px;
+  padding: 10px 20px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+
+.msg p:first-child {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.msg img {
+  max-height: 70px;
+  border-radius: 90px;
+}
+
+.received-msg {
+  border-top-right-radius: 40px;
+  background-color: #ef5241;
+}
+
+.sent-msg {
+  border-top-left-radius: 40px;
+  background-color: #d7d732;
+  align-self: flex-end;
+}
+
+#message-input {
+  box-sizing: border-box;
+  position: relative;
+  background-color: #ef5241;
+  padding: 10px;
+  bottom: 0;
+  border: 2px solid #d7d732;
+  margin-top: auto;
+}
+
+#message-input input {
+  margin: 0px;
+  box-sizing: border-box;
 }
 
 @media only screen and (max-width: 600px) {
